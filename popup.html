@@ -3,29 +3,67 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <div>
+        <div> <!-- Title -->
             <form>
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title">
             </form>
         </div>
-        <div>
+        <div> <!-- Author -->
             <form>
                 <label for="author">Author:</label>
                 <input type="text" id="author" name="author">
             </form>
         </div>
-        <div>
+        <div> <!-- Form -->
             <form>
                 <label for="form">Form:</label>
-                <input type="text" id="form" name="form">
+                <select id="form">
+                        <option value="book">Book</option>
+                        <option value="ebook">eBook</option>
+                        <option value="manga">Manga</option>
+                        <option value="poetry">Poetry</option>
+                        <option value="essay">Essay</option>
+                        <option value="newsArticle">News Article</option>
+                        <option value="other">Other</option>
+                </select>
             </form>
         </div>
-        <div>
+        <div> <!-- Genre -->
+            <form>
+                <label for="form">Genre:</label>
+                <select id="form">
+                    <option value="fantasy">Fantasy</option>
+                    <option value="scienceFiction">Science Fiction</option>
+                    <option value="romance">Romance</option>
+                    <option value="horror">Horror</option>
+                    <option value="mystery">Mystery</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="comedy">Comedy</option>
+                    <option value="other">Other</option>
+                </select>
+            </form>
+        </div>
+        <div> <!-- Rating -->
             <form>
                 <label for="rating">Rating:</label>
                 <input type="text" id="rating" name="rating">
             </form>
         </div>
+        <div> <!-- Words Read -->
+            <form>
+                <label for="wordsRead">Words Read:</label>
+                <input type="text" id="wordsRead" name="wordsRead" placeholder="(For this specific work)">
+            </form>
+        </div>
+        <div> <!-- Notes -->
+            <form>
+                <label for="notes">Notes:</label>
+                <input type="text" id="notes" name="notes">
+            </form>
+        </div>
+        <button id="submitButton" type="submit">Log</button>
+
+        <script src="scripts.js"></script>
     </body>
 </html>
