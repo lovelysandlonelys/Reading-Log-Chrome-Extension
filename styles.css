@@ -3,6 +3,6 @@
     margin: auto;
 }
 
-#notes {
-    height: 75px;
+.star:hover, .star:active {
+    color:gold;
 }

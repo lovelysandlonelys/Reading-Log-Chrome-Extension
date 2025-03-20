@@ -1,29 +1,35 @@
 /* To implement:
-    -Make entirety of notes section typable lol
-    -Add dropdown for rating
-    -Move Form and Genre dropdowns to below the labels like the other ones
-
+    -Add functionality for rating dropdown
+    -Fix popup window bottom being too long
 */
 
 document.getElementById("submitButton").addEventListener("click", function() {
     let titleInput = document.getElementById("title").value;
-    console.log(titleInput);  /* For debugging */
+    if (titleInput != "")
+        console.log(titleInput);  /* For debugging */
 
     let authorInput = document.getElementById("author").value;
-    console.log(authorInput); /* For debugging */
+    if (authorInput != "")
+        console.log(authorInput); /* For debugging */
 
     let formInput = document.getElementById("form").value;
-    console.log(formInput); /* For debugging */
+    if (formInput != "")
+        console.log(formInput); /* For debugging */
 
-    let genreInput = document.getElementById("author").value;
-    console.log(genreInput); /* For debugging */
+    let genreInput = document.getElementById("genre").value;
+    if (genreInput != "")
+        console.log(genreInput); /* For debugging */
 
+    // I don't think this works properly btw. This is before I converted it to the star system that doesn't work yet.
     let ratingInput = document.getElementById("rating").value;
-    console.log(ratingInput); /* For debugging */
+    if (ratingInput != "")
+        console.log(ratingInput); /* For debugging */
 
     let wordsReadInput = document.getElementById("wordsRead").value;
-    console.log(wordsReadInput); /* For debugging */
+    if (wordsReadInput != "")
+        console.log(wordsReadInput); /* For debugging */
 
     let notesInput = document.getElementById("notes").value;
-    console.log(notesInput); /* For debugging */
+    if (notesInput != "")
+        console.log(notesInput); /* For debugging */
 });

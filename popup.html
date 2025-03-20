@@ -31,8 +31,8 @@
         </div>
         <div> <!-- Genre -->
             <form>
-                <label for="form">Genre:</label>
-                <select id="form">
+                <label for="genre">Genre:</label>
+                <select id="genre">
                     <option value="fantasy">Fantasy</option>
                     <option value="scienceFiction">Science Fiction</option>
                     <option value="romance">Romance</option>
@@ -45,9 +45,13 @@
             </form>
         </div>
         <div> <!-- Rating -->
+            <label for=rating>Rating:</label>
             <form>
-                <label for="rating">Rating:</label>
-                <input type="text" id="rating" name="rating">
+                <span class="star" value="1">&#9733;</span>
+                <span class="star" value="2">&#9733;</span>
+                <span class="star" value="3">&#9733;</span>
+                <span class="star" value="4">&#9733;</span>
+                <span class="star" value="5">&#9733;</span>
             </form>
         </div>
         <div> <!-- Words Read -->
@@ -59,10 +63,12 @@
         <div> <!-- Notes -->
             <form>
                 <label for="notes">Notes:</label>
-                <input type="text" id="notes" name="notes">
+                <textarea id="notes" name="notes" rows="5" cols="30"></textarea>
             </form>
         </div>
-        <button id="submitButton" type="submit">Log</button>
+        <div id="submitButtonSpace">
+            <button id="submitButton" type="submit">Log</button>
+        </div>
 
         <script src="scripts.js"></script>
     </body>
