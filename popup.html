@@ -70,6 +70,31 @@
             <button id="submitButton" type="submit">Log</button>
         </div>
 
+
         <script src="scripts.js"></script>
+        <!-- Firebase -->
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+          
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+              apiKey: "AIzaSyCOpGI0AUqLMJfjbzqPwIKWuItiIR57El8",
+              authDomain: "reading-log-chrome-extension.firebaseapp.com",
+              projectId: "reading-log-chrome-extension",
+              storageBucket: "reading-log-chrome-extension.firebasestorage.app",
+              messagingSenderId: "183603389063",
+              appId: "1:183603389063:web:d33467ec73c575c786ce22",
+              measurementId: "G-XNQMQ4M90S"
+            };
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+          </script>
     </body>
 </html>
