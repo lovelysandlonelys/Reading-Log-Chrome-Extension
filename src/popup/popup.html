@@ -1,100 +1,63 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        <div> <!-- Title -->
-            <form>
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title">
-            </form>
-        </div>
-        <div> <!-- Author -->
-            <form>
-                <label for="author">Author:</label>
-                <input type="text" id="author" name="author">
-            </form>
-        </div>
-        <div> <!-- Form -->
-            <form>
-                <label for="form">Form:</label>
-                <select id="form">
-                        <option value="book">Book</option>
-                        <option value="ebook">eBook</option>
-                        <option value="manga">Manga</option>
-                        <option value="poetry">Poetry</option>
-                        <option value="essay">Essay</option>
-                        <option value="newsArticle">News Article</option>
-                        <option value="other">Other</option>
-                </select>
-            </form>
-        </div>
-        <div> <!-- Genre -->
-            <form>
-                <label for="genre">Genre:</label>
-                <select id="genre">
-                    <option value="fantasy">Fantasy</option>
-                    <option value="scienceFiction">Science Fiction</option>
-                    <option value="romance">Romance</option>
-                    <option value="horror">Horror</option>
-                    <option value="mystery">Mystery</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="other">Other</option>
-                </select>
-            </form>
-        </div>
-        <div> <!-- Rating [UNFINISHED]--> 
-            <label for=rating>Rating:</label>
-            <form>
-                <span class="star" value="1">&#9733;</span>
-                <span class="star" value="2">&#9733;</span>
-                <span class="star" value="3">&#9733;</span>
-                <span class="star" value="4">&#9733;</span>
-                <span class="star" value="5">&#9733;</span>
-            </form>
-        </div>
-        <div> <!-- Words Read -->
-            <form>
-                <label for="wordsRead">Words Read:</label>
-                <input type="text" id="wordsRead" name="wordsRead" placeholder="(For this specific work)">
-            </form>
-        </div>
-        <div> <!-- Notes -->
-            <form>
-                <label for="notes">Notes:</label>
-                <textarea id="notes" name="notes" rows="5" cols="30"></textarea>
-            </form>
-        </div>
-        <div id="submitButtonSpace">
-            <button id="submitButton" type="submit">Log</button>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reading Log</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="popup-container">
+    <h1>📚 Log Your Reading</h1>
+    <form id="readingForm">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title">
 
+      <label for="author">Author:</label>
+      <input type="text" id="author" name="author">
 
-        <script src="scripts.js"></script>
-        <!-- Firebase -->
-        <script type="module">
-            // Import the functions you need from the SDKs you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-            import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
-            // TODO: Add SDKs for Firebase products that you want to use
-            // https://firebase.google.com/docs/web/setup#available-libraries
-          
-            // Your web app's Firebase configuration
-            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-            const firebaseConfig = {
-              apiKey: "AIzaSyCOpGI0AUqLMJfjbzqPwIKWuItiIR57El8",
-              authDomain: "reading-log-chrome-extension.firebaseapp.com",
-              projectId: "reading-log-chrome-extension",
-              storageBucket: "reading-log-chrome-extension.firebasestorage.app",
-              messagingSenderId: "183603389063",
-              appId: "1:183603389063:web:d33467ec73c575c786ce22",
-              measurementId: "G-XNQMQ4M90S"
-            };
-          
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const analytics = getAnalytics(app);
-          </script>
-    </body>
+      <label for="form">Form:</label>
+      <select id="form" name="form">
+        <option value="book">Book</option>
+        <option value="ebook">eBook</option>
+        <option value="manga">Manga</option>
+        <option value="poetry">Poetry</option>
+        <option value="essay">Essay</option>
+        <option value="newsArticle">News Article</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="genre">Genre:</label>
+      <select id="genre" name="genre">
+        <option value="fantasy">Fantasy</option>
+        <option value="scienceFiction">Science Fiction</option>
+        <option value="romance">Romance</option>
+        <option value="horror">Horror</option>
+        <option value="mystery">Mystery</option>
+        <option value="adventure">Adventure</option>
+        <option value="comedy">Comedy</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label>Rating:</label>
+      <div class="rating" id="rating">
+        <span data-value="1">&#9733;</span>
+        <span data-value="2">&#9733;</span>
+        <span data-value="3">&#9733;</span>
+        <span data-value="4">&#9733;</span>
+        <span data-value="5">&#9733;</span>
+      </div>
+
+      <label for="wordsRead">Words Read:</label>
+      <input type="text" id="wordsRead" name="wordsRead" placeholder="(for this specific work)">
+
+      <label for="notes">Notes:</label>
+      <textarea id="notes" name="notes" rows="4" placeholder="Optional notes..."></textarea>
+
+      <button type="submit" id="submitButton">Log</button>
+    </form>
+  </div>
+
+  <script type="module" src="firebase-init.js"></script>
+  <script src="scripts/scripts.js"></script>
+</body>
 </html>
