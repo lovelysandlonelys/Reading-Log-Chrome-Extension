@@ -1,3 +1,4 @@
+(() => {
 // Retrieve title or set to '[not found]'
 const title = document.title || "[not found]";
 
@@ -14,3 +15,4 @@ console.log("Page Author:", metaAuthor);
 
 // Send title and author back to the popup
 chrome.runtime.sendMessage({ title, author: metaAuthor });
+})();
