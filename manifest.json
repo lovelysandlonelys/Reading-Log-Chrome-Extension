@@ -9,7 +9,7 @@
     "default_icon": "src/images/icon.png"
   },
 
-  "permissions": ["scripting", "activeTab"],
+  "permissions": ["scripting", "activeTab", "tabs"],
 
   "host_permissions": ["<all_urls>"],
 
