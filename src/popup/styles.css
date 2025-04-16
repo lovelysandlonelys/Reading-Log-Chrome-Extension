@@ -85,3 +85,15 @@ body {
     background-color: #ff85c1;
   }
   
+  .tabcontent {
+    display: none;
+  }
+
+  .tablinks.active {
+    background-color: #f0f0f0; /* optional, for feedback */
+  }
+
+  #Log {
+    display: block;
+  }
+  
