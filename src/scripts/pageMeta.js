@@ -9,10 +9,6 @@ const metaAuthor =
   document.querySelector('meta[name="twitter:creator"]')?.content ||
   "[not found]";
 
-// Log the values for debugging purposes
-console.log("Page Title:", title);
-console.log("Page Author:", metaAuthor);
-
 // Send title and author back to the popup
 chrome.runtime.sendMessage({ title, author: metaAuthor });
 })();

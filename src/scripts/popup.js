@@ -17,13 +17,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 2. Inject the content script to calculate the word count (wordcount.js)
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        files: ['src/content/wordcount.js']
+        files: ['src/scripts/wordcount.js']
     });
 
     // 3. Inject the content script to fetch the title and author (pageMeta.js)
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        files: ['src/content/pageMeta.js']
+        files: ['src/scripts/pageMeta.js']
     });
 
     // 4. Listen for the response from the content script (pageMeta.js)
