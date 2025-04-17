@@ -1,48 +1,100 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+import { saveLogToFirestore } from "./firebase.js";
 
-    // Clear the title, author, and link fields on popup open to avoid stale data
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log("✅ DOM content loaded, running popup.js");
+
+    // Get the active tab
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    console.log("🔍 Active tab:", tab);
+
+    // Clear stale data in form
     document.getElementById("title").value = '';
     document.getElementById("author").value = '';
     document.getElementById("link").value = '';
+    console.log("🧹 Cleared form data");
 
-    // 1. Set up the listener for word count updates
-    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    // Listen for messages from background script (word count)
+    chrome.runtime.onMessage.addListener((message) => {
         if (message.wordCount !== undefined) {
             const input = document.getElementById('wordsRead');
-            if (input) input.value = message.wordCount;
+            if (input) {
+                input.value = message.wordCount;
+                console.log("🔢 Word count received:", message.wordCount);
+            }
         }
     });
 
-    // 2. Inject the content script to calculate the word count (wordcount.js)
+    // Execute scripts to get page meta info
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
         files: ['src/scripts/wordcount.js']
     });
 
-    // 3. Inject the content script to fetch the title and author (pageMeta.js)
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
         files: ['src/scripts/pageMeta.js']
     });
 
-    // 4. Listen for the response from the content script (pageMeta.js)
-    chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+    // Listen for page meta info messages
+    chrome.runtime.onMessage.addListener((msg) => {
         const titleInput = document.getElementById("title");
         const authorInput = document.getElementById("author");
         const linkInput = document.getElementById("link");
 
-        // Update the form fields if the message contains the title, author, or link
-        if (titleInput && msg.title) titleInput.value = msg.title;
-        if (authorInput && msg.author) authorInput.value = msg.author;
-        if (linkInput && tab.url) linkInput.value = tab.url;
+        if (titleInput && msg.title) {
+            titleInput.value = msg.title;
+            console.log("📄 Title set from page:", msg.title);
+        }
+        if (authorInput && msg.author) {
+            authorInput.value = msg.author;
+            console.log("✍️ Author set from page:", msg.author);
+        }
+        if (linkInput && tab.url) {
+            linkInput.value = tab.url;
+            console.log("🔗 Link set from tab URL:", tab.url);
+        }
     });
 
-    // 5. Handle the submit button click and reset form
-    document.getElementById("submitButton").addEventListener("click", function(event) {
-        event.preventDefault();  // Prevent form submission
+    // Submit button click resets the form
+    // document.getElementById("submitButton").addEventListener("click", function(event) {
+    //     event.preventDefault();
+    //     document.getElementById("readingForm").reset();
+    //     console.log("🔄 Form reset on submit button click");
+    // });
 
-        // Clear form fields after clicking 'Log'
-        document.getElementById("readingForm").reset();  // Resets all fields
-    });
+    // Ensure the readingForm exists before attaching the submit listener
+    const readingForm = document.getElementById("readingForm");
+    if (readingForm) {
+        readingForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const logData = {
+                title: document.getElementById("title").value,
+                author: document.getElementById("author").value,
+                wordsRead: parseInt(document.getElementById("wordsRead").value),
+                link: document.getElementById("link").value
+            };
+
+            console.log("📦 Submitting log data:", logData);
+
+            // Check if the values are populated correctly
+            if (!logData.title || !logData.author || !logData.wordsRead || !logData.link) {
+                console.error("🔥 Error: Missing one or more required fields in log data");
+            }
+
+            try {
+                // Log before sending to Firestore
+                console.log("🚀 Sending log data to Firestore...");
+                await saveLogToFirestore(logData);
+                console.log("✅ Log data successfully saved to Firestore");
+            } catch (error) {
+                // Log any errors that occur
+                console.error("🔥 Error saving log to Firestore:", error);
+            }
+        });
+    } else {
+        console.error("🔥 Error: 'readingForm' not found");
+    }
+
+
 });

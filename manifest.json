@@ -9,12 +9,13 @@
     "default_icon": "src/images/icon.png"
   },
 
-  "permissions": ["scripting", "activeTab", "tabs"],
+  "permissions": ["scripting", "activeTab", "tabs", "storage"],
 
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": ["<all_urls>", "https://firestore.googleapis.com/"],
 
   "content_security_policy": {
     "script-src": "'self' https://www.gstatic.com",
+    "extension_pages": "script-src 'self'; object-src 'self';",
     "object-src": "'self'"
   }
 }
