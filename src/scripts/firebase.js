@@ -52,3 +52,51 @@ export async function getLogsFromFirestore() {
     return [];
   }
 }
+
+// 🚮 Delete a log
+export async function deleteLogFromFirestore(logId) {
+  const url = `${BASE_FIRESTORE_URL}/${COLLECTION_PATH}/${logId}?key=${FIREBASE_API_KEY}`;
+
+  try {
+    const res = await fetch(url, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) throw new Error(`Failed to delete log: ${res.status}`);
+    console.log("🗑️ Log deleted!");
+  } catch (err) {
+    console.error("🔥 Error deleting log:", err);
+  }
+}
+
+// 🛠️ Update a log
+export async function updateLogInFirestore(logId, updatedData) {
+  const url = `${BASE_FIRESTORE_URL}/${COLLECTION_PATH}/${logId}?key=${FIREBASE_API_KEY}`;
+
+  const body = {
+    fields: {
+      title:     { stringValue: updatedData.title },
+      author:    { stringValue: updatedData.author },
+      link:      { stringValue: updatedData.link },
+      form:      { stringValue: updatedData.form || "" },
+      genre:     { stringValue: updatedData.genre || "" },
+      rating:    { integerValue: updatedData.rating || 0 },
+      wordsRead: { integerValue: updatedData.wordsRead || 0 },
+      notes:     { stringValue: updatedData.notes || "" },
+      timestamp: { timestampValue: new Date().toISOString() },
+    },
+  };
+
+  try {
+    const res = await fetch(url, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) throw new Error(`Failed to update log: ${res.status}`);
+    console.log("📝 Log updated!");
+  } catch (err) {
+    console.error("🔥 Error updating log:", err);
+  }
+}

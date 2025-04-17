@@ -16,6 +16,20 @@ body {
     flex-direction: column;
     justify-content: space-between;
   }
+
+  .popup {
+    position: relative;
+    padding: 0;
+    margin: 0;
+  }
+
+  .popup-header {
+    margin: 0;
+    padding: 10px 20px; /* adjust for spacing inside the header */
+    position: relative; /* or static, as needed */
+    top: 0;
+  }
+  
   
   h1 {
     text-align: center;
@@ -103,9 +117,9 @@ body {
     display: block;
   }
   
-  #historyLogsContainer {
-    padding: 1rem;
-    font-family: sans-serif;
+  #History.popup-container {
+    width: 420px;
+    height: auto;
   }
   
   .log-entry {
@@ -116,4 +130,93 @@ body {
     border-radius: 10px;
   }
 
+  .filter-container {
+    border: 1px solid #ffd6e7;
+    background-color: #fff8fb;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 10px;
+    box-shadow: 0 2px 6px rgba(255, 105, 180, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .filter-container h3 {
+    color: #d6336c;
+    font-size: 16px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  
+  .filter-container label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #444;
+  }
+  
+  .filter-container input[type="text"],
+  .filter-container select {
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: border-color 0.3s;
+  }
+  
+  .filter-container input[type="text"]:focus,
+  .filter-container select:focus {
+    border-color: #ff69b4;
+    outline: none;
+  }
+  
+  #applyFilters {
+    align-self: center;
+    background-color: #ff69b4;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  #applyFilters:hover {
+    background-color: #ff85c1;
+  }
+  
+  .filter-container {
+    padding: 15px;
+    background-color: #fff7fb;
+    border-radius: 10px;
+    margin: 10px;
+  }
+  
+  .filter-container h3 {
+    color: #d6336c;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  .filter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  
+  .filter-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .filter-item label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 4px;
+  }
   
