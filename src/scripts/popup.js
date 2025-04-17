@@ -62,12 +62,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         star.addEventListener("click", function () {
             // Remove "selected" class from all stars
             ratingStars.forEach(star => star.classList.remove("selected"));
-            // Add "selected" class to clicked star
-            this.classList.add("selected");
+            
+            // Add "selected" class to all stars up to the clicked star
+            let clickedIndex = Array.from(ratingStars).indexOf(this);
+            for (let i = 0; i <= clickedIndex; i++) {
+                ratingStars[i].classList.add("selected");
+            }
+            
             // Set the rating value based on clicked star's data-value
             ratingValue = parseInt(this.getAttribute("data-value"));
         });
     });
+
 
     // Handle form submission
     const readingForm = document.getElementById("readingForm");
