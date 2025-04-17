@@ -7,24 +7,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     console.log("🔍 Active tab:", tab);
 
-    // Clear stale data in form
-    document.getElementById("title").value = '';
-    document.getElementById("author").value = '';
-    document.getElementById("link").value = '';
+    // Clear form data on load
+    const titleInput = document.getElementById("title");
+    const authorInput = document.getElementById("author");
+    const linkInput = document.getElementById("link");
+    const wordsInput = document.getElementById("wordsRead");
+
+    titleInput.value = '';
+    authorInput.value = '';
+    linkInput.value = '';
+    if (wordsInput) wordsInput.value = '';
     console.log("🧹 Cleared form data");
 
-    // Listen for messages from background script (word count)
+    // Listen for word count messages
     chrome.runtime.onMessage.addListener((message) => {
-        if (message.wordCount !== undefined) {
-            const input = document.getElementById('wordsRead');
-            if (input) {
-                input.value = message.wordCount;
-                console.log("🔢 Word count received:", message.wordCount);
-            }
+        if (message.wordCount !== undefined && wordsInput) {
+            wordsInput.value = message.wordCount;
+            console.log("🔢 Word count received:", message.wordCount);
         }
     });
 
-    // Execute scripts to get page meta info
+    // Inject content scripts
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
         files: ['src/scripts/wordcount.js']
@@ -37,64 +40,80 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Listen for page meta info messages
     chrome.runtime.onMessage.addListener((msg) => {
-        const titleInput = document.getElementById("title");
-        const authorInput = document.getElementById("author");
-        const linkInput = document.getElementById("link");
-
-        if (titleInput && msg.title) {
+        if (msg.title && titleInput) {
             titleInput.value = msg.title;
             console.log("📄 Title set from page:", msg.title);
         }
-        if (authorInput && msg.author) {
+        if (msg.author && authorInput) {
             authorInput.value = msg.author;
             console.log("✍️ Author set from page:", msg.author);
         }
-        if (linkInput && tab.url) {
+        if (tab.url && linkInput) {
             linkInput.value = tab.url;
             console.log("🔗 Link set from tab URL:", tab.url);
         }
     });
 
-    // Submit button click resets the form
-    // document.getElementById("submitButton").addEventListener("click", function(event) {
-    //     event.preventDefault();
-    //     document.getElementById("readingForm").reset();
-    //     console.log("🔄 Form reset on submit button click");
-    // });
+    // Handle rating star selection
+    const ratingStars = document.querySelectorAll(".rating span");
+    let ratingValue = 0;
 
-    // Ensure the readingForm exists before attaching the submit listener
+    ratingStars.forEach(star => {
+        star.addEventListener("click", function () {
+            // Remove "selected" class from all stars
+            ratingStars.forEach(star => star.classList.remove("selected"));
+            // Add "selected" class to clicked star
+            this.classList.add("selected");
+            // Set the rating value based on clicked star's data-value
+            ratingValue = parseInt(this.getAttribute("data-value"));
+        });
+    });
+
+    // Handle form submission
     const readingForm = document.getElementById("readingForm");
     if (readingForm) {
         readingForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
+            // Get form values
             const logData = {
-                title: document.getElementById("title").value,
-                author: document.getElementById("author").value,
-                wordsRead: parseInt(document.getElementById("wordsRead").value),
-                link: document.getElementById("link").value
+                title: titleInput.value.trim(),
+                author: authorInput.value.trim(),
+                link: linkInput.value.trim(),
+                form: document.getElementById("form").value,  // Get selected form type
+                genre: document.getElementById("genre").value,  // Get selected genre
+                wordsRead: parseInt(wordsInput.value) || 0,  // Fallback to 0 if not a valid number
+                notes: document.getElementById("notes").value.trim(),
+                rating: ratingValue,  // Use the selected rating value
+                timestamp: new Date().toISOString()  // Get current timestamp
             };
 
             console.log("📦 Submitting log data:", logData);
 
-            // Check if the values are populated correctly
-            if (!logData.title || !logData.author || !logData.wordsRead || !logData.link) {
-                console.error("🔥 Error: Missing one or more required fields in log data");
+            // Validate form data
+            if (!logData.title || !logData.author || !logData.link || !logData.form || !logData.genre || isNaN(logData.wordsRead) || ratingValue === 0) {
+                console.error("🔥 Error: Missing or invalid fields in log data");
+                alert("Please fill in all required fields.");
+                return;
             }
 
             try {
-                // Log before sending to Firestore
                 console.log("🚀 Sending log data to Firestore...");
                 await saveLogToFirestore(logData);
                 console.log("✅ Log data successfully saved to Firestore");
+
+                // ✅ Reset form after successful submission
+                readingForm.reset();
+                // Reset the rating stars
+                ratingStars.forEach(star => star.classList.remove("selected"));
+                console.log("🧼 Form reset after successful log");
+                alert("Your log has been saved!");
             } catch (error) {
-                // Log any errors that occur
                 console.error("🔥 Error saving log to Firestore:", error);
+                alert("There was an error saving your log.");
             }
         });
     } else {
         console.error("🔥 Error: 'readingForm' not found");
     }
-
-
 });

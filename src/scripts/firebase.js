@@ -3,19 +3,23 @@ const PROJECT_ID = "reading-log-chrome-extension";
 
 const FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/works?key=${FIREBASE_API_KEY}`;
 
-
 export async function saveLogToFirestore(logData) {
+  // Ensure logData fields are properly validated
   const body = {
     fields: {
-      title:        { stringValue: logData.title },
-      author:       { stringValue: logData.author },
-      wordsRead:    { integerValue: String(logData.wordsRead) },
-      link:         { stringValue: logData.link },
-      timestamp:    { timestampValue: new Date().toISOString() }
+      title:       { stringValue: logData.title },
+      author:      { stringValue: logData.author },
+      link:        { stringValue: logData.link },
+      form:        { stringValue: logData.form || "" },  // Handle missing form data
+      genre:       { stringValue: logData.genre || "" }, // Handle missing genre data
+      rating:      { integerValue: logData.rating || 0 }, // Don't convert rating to string
+      wordsRead:   { integerValue: logData.wordsRead || 0 }, // Don't convert wordsRead to string
+      notes:       { stringValue: logData.notes || "" },  // Handle missing notes
+      timestamp:   { timestampValue: new Date().toISOString() }
     }
   };
 
-  console.log("💬 Preparing to send the following data to Firestore:", body);
+  console.log("💬 Sending the following data to Firestore:", body);
 
   try {
     const res = await fetch(FIRESTORE_URL, {
@@ -25,7 +29,7 @@ export async function saveLogToFirestore(logData) {
     });
 
     if (!res.ok) {
-      console.error("🔥 Error: Firestore request failed", res.status, await res.text());
+      console.error("🔥 Error:", res.status, await res.text());
       throw new Error("Failed to save log");
     }
 
