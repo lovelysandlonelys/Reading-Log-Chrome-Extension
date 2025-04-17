@@ -103,3 +103,17 @@ body {
     display: block;
   }
   
+  #historyLogsContainer {
+    padding: 1rem;
+    font-family: sans-serif;
+  }
+  
+  .log-entry {
+    background: #fff5fa;
+    border: 1px solid #ffb6c1;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+  }
+
+  

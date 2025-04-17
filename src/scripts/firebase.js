@@ -38,3 +38,17 @@ export async function saveLogToFirestore(logData) {
     console.error("🔥 Firestore error:", err);
   }
 }
+
+export async function getLogsFromFirestore() {
+  const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/works?key=${FIREBASE_API_KEY}`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+    const data = await response.json();
+    return data.documents || [];
+  } catch (error) {
+    console.error("Error fetching logs:", error);
+    return [];
+  }
+}
