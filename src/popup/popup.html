@@ -82,87 +82,86 @@
 
         </div> <!-- End of Log Tab -->
 
-    </div> <!-- End of popup container -->
+        <div id="History" class="tabcontent">
+            <h1>History</h1>
 
-    <div class="popup-container">
-    <div id="History" class="tabcontent">
-        <h1>History</h1>
-
-        <!-- Filter Section -->
-        <div class="filter-container">
-            <h3>🔍 Filter Logs</h3>
-            <div class="filter-grid">
-          
-              <div class="filter-item">
-                <label for="filterTitle">Title</label>
-                <input type="text" id="filterTitle" placeholder="Enter title...">
-              </div>
-          
-              <div class="filter-item">
-                <label for="filterAuthor">Author</label>
-                <input type="text" id="filterAuthor" placeholder="Enter author...">
-              </div>
-          
-              <div class="filter-item">
-                <label for="filterGenre">Genre</label>
-                <select id="filterGenre">
-                  <option value="">All Genres</option>
-                  <option value="fantasy">Fantasy</option>
-                  <option value="scienceFiction">Science Fiction</option>
-                  <option value="romance">Romance</option>
-                  <option value="horror">Horror</option>
-                  <option value="mystery">Mystery</option>
-                  <option value="adventure">Adventure</option>
-                  <option value="comedy">Comedy</option>
-                  <option value="informative">Informative</option>
-                  <option value="news">News</option>
-                  <option value="recipe">Recipe</option>
-                  <option value="Fanfiction">Fanfiction</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-          
-              <div class="filter-item">
-                <label for="filterForm">Form</label>
-                <select id="filterForm">
-                  <option value="">All Forms</option>
-                  <option value="book">Book</option>
-                  <option value="ebook">eBook</option>
-                  <option value="manga">Manga</option>
-                  <option value="poetry">Poetry</option>
-                  <option value="essay">Essay</option>
-                  <option value="article">Article</option>
-                  <option value="shortStory">Short Story</option>
-                  <option value="recipe">Recipe</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-          
-              <div class="filter-item">
-                <label for="filterRating">Rating</label>
-                <select id="filterRating">
-                  <option value="">Any Rating</option>
-                  <option value="5">★★★★★</option>
-                  <option value="4">★★★★</option>
-                  <option value="3">★★★</option>
-                  <option value="2">★★</option>
-                  <option value="1">★</option>
-                </select>
-              </div>
-          
+            <!-- Filter Section -->
+            <div class="filter-container">
+                <h3>🔍 Filter Logs</h3>
+                <div class="filter-grid">
+            
+                <div class="filter-item">
+                    <label for="filterTitle">Title</label>
+                    <input type="text" id="filterTitle" placeholder="Enter title...">
+                </div>
+            
+                <div class="filter-item">
+                    <label for="filterAuthor">Author</label>
+                    <input type="text" id="filterAuthor" placeholder="Enter author...">
+                </div>
+            
+                <div class="filter-item">
+                    <label for="filterGenre">Genre</label>
+                    <select id="filterGenre">
+                    <option value="">All Genres</option>
+                    <option value="fantasy">Fantasy</option>
+                    <option value="scienceFiction">Science Fiction</option>
+                    <option value="romance">Romance</option>
+                    <option value="horror">Horror</option>
+                    <option value="mystery">Mystery</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="comedy">Comedy</option>
+                    <option value="informative">Informative</option>
+                    <option value="news">News</option>
+                    <option value="recipe">Recipe</option>
+                    <option value="Fanfiction">Fanfiction</option>
+                    <option value="other">Other</option>
+                    </select>
+                </div>
+            
+                <div class="filter-item">
+                    <label for="filterForm">Form</label>
+                    <select id="filterForm">
+                    <option value="">All Forms</option>
+                    <option value="book">Book</option>
+                    <option value="ebook">eBook</option>
+                    <option value="manga">Manga</option>
+                    <option value="poetry">Poetry</option>
+                    <option value="essay">Essay</option>
+                    <option value="article">Article</option>
+                    <option value="shortStory">Short Story</option>
+                    <option value="recipe">Recipe</option>
+                    <option value="other">Other</option>
+                    </select>
+                </div>
+            
+                <div class="filter-item">
+                    <label for="filterRating">Rating</label>
+                    <select id="filterRating">
+                    <option value="">Any Rating</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                    </select>
+                </div>
+            
+                </div>
+            
+                <button id="applyFilters">Apply Filters</button>
             </div>
-          
-            <button id="applyFilters">Apply Filters</button>
-        </div>
-          
-        <div id="historyLogsContainer"></div> <!-- Container to display logs -->
-    </div> <!-- End of History Tab -->
-    </div> <!-- End of popup container -->
+            
+            <div id="historyLogsContainer"></div> <!-- Container to display logs -->
+        </div> <!-- End of History Tab -->
+    
       
-    <div id="Stats" class="tabcontent">
-        <h1>Stats</h1>
-        <p>Tokyo is the capital of Japan.</p>
-    </div> <!-- End of Stats Tab -->
+        <div id="Stats" class="tabcontent">
+            <h1>Stats</h1>
+            <p>Tokyo is the capital of Japan.</p>
+        </div> <!-- End of Stats Tab -->
+
+    </div> <!-- End of popup container -->
 
     <!-- Scripts -->
     <script src="../scripts/tabs.js"></script>

@@ -7,22 +7,22 @@ body {
   
   .popup-container {
     background-color: #fff0f5;
-    padding: 10px 10px 10px 10px; /* Padding adjusted for more space */
+    padding: 0; /* Remove padding at top to ensure tabs are visible */
     border-radius: 12px;
     width: 380px;
-    height: 400px;
+    height: 600px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    overflow: hidden; /* Prevent content from spilling outside */
   }
-
+  
   .popup {
     position: relative;
     padding: 0;
     margin: 0;
   }
-
+  
   .popup-header {
     margin: 0;
     padding: 10px 20px; /* adjust for spacing inside the header */
@@ -30,14 +30,13 @@ body {
     top: 0;
   }
   
-  
   h1 {
     text-align: center;
     color: #d6336c;
-    font-size: 18px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    margin-bottom: 5px;
   }
-
+  
   p {
     color: #444;
     font-weight: bold;
@@ -74,10 +73,8 @@ body {
     height: 70px;
   }
   
-  
-
   .rating span {
-    font-size: 24px; /* Size of stars */
+    font-size: 20px; /* Size of stars */
     cursor: pointer;
     color: #ccc; /* Default color for stars */
   }
@@ -105,14 +102,50 @@ body {
     background-color: #ff85c1;
   }
   
+  /* Style the tab container to be visible at the top */
+  .tab {
+    display: flex;
+    background-color: #fff0f5;
+    border-bottom: 1px solid #ffb6c1;
+    width: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0; /* Prevent tab from shrinking */
+  }
+  
+  /* Make sure tab buttons are properly sized */
+  .tablinks {
+    flex: 1;
+    background-color: #ffeefa;
+    border: none;
+    margin: 0;
+    padding: 6px 0;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .tablinks:hover {
+    background-color: #ffcce0;
+  }
+  
+  .tablinks.active {
+    background-color: #ff85c1;
+    color: white;
+    border-bottom: 1px solid #ff85c1;
+  }
+  
+  /* Style the content area */
   .tabcontent {
     display: none;
+    padding: 5px;
+    flex-grow: 1;
+    overflow-y: auto; /* Allow scrolling if content is too tall */
   }
-
-  .tablinks.active {
-    background-color: #ff85c1; /* optional, for feedback */
-  }
-
+  
+  /* Make sure one tab is visible by default */
   #Log {
     display: block;
   }
@@ -129,23 +162,23 @@ body {
     margin-bottom: 1rem;
     border-radius: 10px;
   }
-
+  
   .filter-container {
     border: 1px solid #ffd6e7;
     background-color: #fff8fb;
-    padding: 16px;
+    padding: 8px;
     border-radius: 12px;
-    margin: 10px;
+    margin: 5px 0;
     box-shadow: 0 2px 6px rgba(255, 105, 180, 0.15);
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
   }
   
   .filter-container h3 {
     color: #d6336c;
     font-size: 16px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     text-align: center;
   }
   
@@ -157,7 +190,7 @@ body {
   
   .filter-container input[type="text"],
   .filter-container select {
-    padding: 6px;
+    padding: 4px;
     font-size: 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -175,7 +208,7 @@ body {
     align-self: center;
     background-color: #ff69b4;
     color: white;
-    padding: 8px 20px;
+    padding: 6px 16px;
     border: none;
     border-radius: 20px;
     font-size: 14px;
@@ -188,24 +221,10 @@ body {
     background-color: #ff85c1;
   }
   
-  .filter-container {
-    padding: 15px;
-    background-color: #fff7fb;
-    border-radius: 10px;
-    margin: 10px;
-  }
-  
-  .filter-container h3 {
-    color: #d6336c;
-    margin-bottom: 10px;
-    text-align: center;
-    font-size: 16px;
-  }
-  
   .filter-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 8px;
   }
   
   .filter-item {
@@ -217,6 +236,7 @@ body {
     font-size: 12px;
     font-weight: bold;
     color: #555;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
   
+  /* Remove duplicate CSS for filter-container */
