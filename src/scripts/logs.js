@@ -27,15 +27,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     const notes = fields.notes?.stringValue || "";
 
     entry.innerHTML = `
-      <h3><a href="${link}" target="_blank">${title}</a></h3>
-      <p><strong>Author:</strong> ${author}</p>
-      <p><strong>Genre:</strong> ${genre} | <strong>Form:</strong> ${form}</p>
-      <p><strong>Words Read:</strong> ${words}</p>
-      <p><strong>Rating:</strong> ${"★".repeat(rating)}${"☆".repeat(5 - rating)}</p>
-      <p><em>${notes}</em></p>
-      <hr>
+    <div class="log-entry-header">
+        <p><strong><a href="${link}" target="_blank">${title}</a></strong></p>
+    </div>
+    <p><strong>Author:</strong> ${author}</p>
+    <p><strong>Genre:</strong> ${genre} | <strong>Form:</strong> ${form}</p>
+    <p><strong>Words Read:</strong> ${words}</p>
+    <p><strong>Rating:</strong> ${"★".repeat(rating)}${"☆".repeat(5 - rating)}</p>
+    <p><em>${notes}</em></p>
+    <div class="log-entry-actions">
+        <button class="edit-btn" title="Edit"><i class="fas fa-edit"></i></button>
+        <button class="delete-btn" title="Delete"><i class="fas fa-trash-alt"></i></button>
+    </div>
+    <hr>
     `;
+
 
     historyContainer.appendChild(entry);
   });
+
+  entry.querySelector(".edit-btn").addEventListener("click", () => {
+    // handle edit
+    console.log("Edit clicked for", title);
+  });
+  
+  entry.querySelector(".delete-btn").addEventListener("click", () => {
+    // handle delete
+    console.log("Delete clicked for", title);
+  });
+  
 });

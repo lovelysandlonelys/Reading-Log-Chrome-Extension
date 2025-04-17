@@ -12,12 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const logEntries = document.querySelectorAll(".log-entry");
   
         logEntries.forEach((entry) => {
-          const title = entry.querySelector("h3").innerText.toLowerCase();
-          const author = entry.querySelector("p strong")?.nextSibling?.textContent.trim().toLowerCase();
-          const genre = entry.innerHTML.match(/<strong>Genre:<\/strong>\s(.*?)\s\|/i)?.[1].toLowerCase();
-          const form = entry.innerHTML.match(/<strong>Form:<\/strong>\s(.*?)<\/p>/i)?.[1].toLowerCase();
-          const stars = entry.querySelector("p:nth-of-type(4)")?.innerText || "";
-          const rating = stars.replace(/[^★]/g, "").length.toString(); // count filled stars
+          const title = entry.querySelector(".log-entry-header a")?.textContent.toLowerCase() || "";
+          const author = entry.querySelector("p:nth-of-type(1)")?.textContent.split("Author:")[1]?.trim().toLowerCase() || "";
+          const genreMatch = entry.querySelector("p:nth-of-type(2)")?.textContent.match(/Genre:\s*(.*?)\s*\|/) || [];
+          const formMatch = entry.querySelector("p:nth-of-type(2)")?.textContent.match(/Form:\s*(.*)/) || [];
+          const genre = genreMatch[1]?.toLowerCase() || "";
+          const form = formMatch[1]?.toLowerCase() || "";
+  
+          const stars = entry.querySelector("p:nth-of-type(3)")?.textContent || "";
+          const rating = stars.replace(/[^★]/g, "").length.toString();
   
           const matchTitle = !titleFilter || title.includes(titleFilter);
           const matchAuthor = !authorFilter || author.includes(authorFilter);
@@ -25,11 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const matchForm = !formFilter || form === formFilter.toLowerCase();
           const matchRating = !ratingFilter || rating === ratingFilter;
   
-          if (matchTitle && matchAuthor && matchGenre && matchForm && matchRating) {
-            entry.style.display = "";
-          } else {
-            entry.style.display = "none";
-          }
+          entry.style.display = (matchTitle && matchAuthor && matchGenre && matchForm && matchRating) ? "" : "none";
         });
       });
     }

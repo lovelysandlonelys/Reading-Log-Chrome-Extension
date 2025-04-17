@@ -239,4 +239,55 @@ body {
     margin-bottom: 2px;
   }
   
-  /* Remove duplicate CSS for filter-container */
+  /* log entry stuff */
+
+  .log-entry {
+    position: relative;
+    padding-bottom: 1.5em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 1em;
+    background: #fff;
+  }
+
+  .log-entry-actions {
+    padding-left: 10px;
+  }
+  
+  .log-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .log-entry-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .log-entry-actions button:hover {
+    color: #000;
+  }
+
+  .log-entry .editable[contenteditable="true"] {
+    border-bottom: 1px dashed #999;
+    background-color: #f0f0f0;
+    padding: 0 2px;
+  }
+
+  .log-entry-actions i {
+    font-size: 0.8em;
+    color: #444
+  }
+  
+  .log-entry a {
+    color: #e91e63; /* or any shade of pink you like */
+    text-decoration: none;
+  }
+  
+  .log-entry a:hover {
+    text-decoration: underline;
+    color: #d81b60; /* optional: a slightly darker pink on hover */
+  }
+  
