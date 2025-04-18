@@ -72,7 +72,7 @@ export async function deleteLogFromFirestore(logId) {
   }
 }
 
-// 🛠️ Update a log
+// 🛠️ Update a log ---------------------------------------------------------------------------In Progress
 export async function updateLogInFirestore(logId, updatedData) {
   const url = `${BASE_FIRESTORE_URL}/${COLLECTION_PATH}/${logId}?key=${FIREBASE_API_KEY}`;
 
