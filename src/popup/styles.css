@@ -291,3 +291,20 @@ body {
     color: #d81b60; /* optional: a slightly darker pink on hover */
   }
   
+
+  /* Edit Popup */
+
+  #editModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    z-index: 1000;  /* Ensure it's on top of other content */
+    display: none;  /* Initially hidden */
+}
+
+.hidden {
+    display: none;  /* Utility class to hide elements */
+}
