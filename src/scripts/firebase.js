@@ -1,9 +1,8 @@
+// firebase.js
 const FIREBASE_API_KEY = "AIzaSyCOpGI0AUqLMJfjbzqPwIKWuItiIR57El8";  
 const PROJECT_ID = "reading-log-chrome-extension";    
 const BASE_FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 const COLLECTION_PATH = "works";
-
-
 const FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/works?key=${FIREBASE_API_KEY}`;
 
 export async function saveLogToFirestore(logData) {

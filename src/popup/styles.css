@@ -291,3 +291,53 @@ body {
     color: #d81b60; /* optional: a slightly darker pink on hover */
   }
   
+/* chart stuff */
+.charts-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5px;
+  }
+  
+  #genrePieChart, #formPieChart {
+    width: 45%;
+    height: 300px;
+  }
+  
+  .words-box {
+    position: relative;
+    background: linear-gradient(145deg, #ffe0f0, #fce4ec);
+    padding: 20px 30px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4);
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #c71585;
+    overflow: hidden;
+  }
+  
+  .confetti {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #ffb6c1 2px, transparent 2px),
+                      radial-gradient(circle, #db7093 2px, transparent 2px),
+                      radial-gradient(circle, #dda0dd 2px, transparent 2px),
+                      radial-gradient(circle, #ba55d3 2px, transparent 2px);
+    background-size: 20px 20px;
+    animation: confettiFall 4s linear infinite;
+    opacity: 0.5;
+  }
+  
+  @keyframes confettiFall {
+    from {
+      background-position: 0 0, 10px 0, 20px 0, 30px 0;
+    }
+    to {
+      background-position: 0 100px, 10px 100px, 20px 100px, 30px 100px;
+    }
+  }
+  
