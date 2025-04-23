@@ -9,13 +9,16 @@
     "default_icon": "src/images/icon.png"
   },
 
-  "permissions": ["scripting", "activeTab", "tabs", "storage"],
+  "permissions": ["identity", "scripting", "activeTab", "tabs", "storage"],
+
+  "oauth2": {
+    "client_id": "183603389063-386pleldsl0l0ganuctsi6a465112vuq.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/userinfo.profile"]
+  },
 
   "host_permissions": ["<all_urls>", "https://firestore.googleapis.com/"],
 
   "content_security_policy": {
-    "script-src": "'self' https://www.gstatic.com",
-    "extension_pages": "script-src 'self'; object-src 'self';",
-    "object-src": "'self'"
-  }
+    "extension_pages": "script-src 'self'; object-src 'self';"
+}
 }

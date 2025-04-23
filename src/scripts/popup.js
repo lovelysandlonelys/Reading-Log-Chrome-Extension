@@ -1,6 +1,8 @@
 import { saveLogToFirestore } from "./firebase.js";
+import { googleLogin } from "./auth.js";
+import { getAuth } from "./firebase.js"; // Ensure this is correctly imported
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
     console.log("✅ DOM content loaded, running popup.js");
 
     // Get the active tab
@@ -74,45 +76,46 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    // Handle authentication
+    const loginButton = document.getElementById("loginButton");
+    const userInfo = document.getElementById("userInfo");
+    const readingForm = document.getElementById("readingForm");
+
+    // Handle login
+    loginButton.addEventListener("click", async () => {
+        try {
+            const user = await googleLogin();
+            userInfo.textContent = `Logged in as: ${user.displayName}`;
+            loginButton.style.display = "none";
+        } catch (error) {
+            console.error("Login failed:", error);
+            userInfo.textContent = "Login failed. Please try again.";
+        }
+    });
 
     // Handle form submission
-    const readingForm = document.getElementById("readingForm");
     if (readingForm) {
         readingForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            // Get form values
-            const logData = {
-                title: titleInput.value.trim(),
-                author: authorInput.value.trim(),
-                link: linkInput.value.trim(),
-                form: document.getElementById("form").value,  // Get selected form type
-                genre: document.getElementById("genre").value,  // Get selected genre
-                wordsRead: parseInt(wordsInput.value) || 0,  // Fallback to 0 if not a valid number
-                notes: document.getElementById("notes").value.trim(),
-                rating: ratingValue,  // Use the selected rating value
-                timestamp: new Date().toISOString()  // Get current timestamp
-            };
-
-            console.log("📦 Submitting log data:", logData);
-
-            // Validate form data
-            if (!logData.title || !logData.author || !logData.link || !logData.form || !logData.genre || isNaN(logData.wordsRead) || ratingValue === 0) {
-                console.error("🔥 Error: Missing or invalid fields in log data");
-                alert("Please fill in all required fields.");
-                return;
-            }
-
             try {
+                // Ensure the user is authenticated
+                const auth = getAuth();
+                if (!auth.currentUser) {
+                    alert("Please log in before saving your log.");
+                    return;
+                }
+
+                // Collect form data
+                const logData = {
+                    title: document.getElementById("title").value,
+                    author: document.getElementById("author").value,
+                    link: document.getElementById("link").value,
+                    wordsRead: parseInt(document.getElementById("wordsRead").value, 10),
+                };
+
                 console.log("🚀 Sending log data to Firestore...");
                 await saveLogToFirestore(logData);
-                console.log("✅ Log data successfully saved to Firestore");
-
-                // ✅ Reset form after successful submission
-                readingForm.reset();
-                // Reset the rating stars
-                ratingStars.forEach(star => star.classList.remove("selected"));
-                console.log("🧼 Form reset after successful log");
                 alert("Your log has been saved!");
             } catch (error) {
                 console.error("🔥 Error saving log to Firestore:", error);

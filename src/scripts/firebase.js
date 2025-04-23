@@ -1,58 +1,74 @@
 // firebase.js
-const FIREBASE_API_KEY = "AIzaSyCOpGI0AUqLMJfjbzqPwIKWuItiIR57El8";  
-const PROJECT_ID = "reading-log-chrome-extension";    
-const BASE_FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
-const COLLECTION_PATH = "works";
-const FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/works?key=${FIREBASE_API_KEY}`;
+// filepath: c:\Users\steph\Dev\Reading-Log-Chrome-Extension\src\scripts\firebase.js
+import { initializeApp } from "./firebase-app.js"; // Local file
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "./firebase-auth.js"; // Local file
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCOpGI0AUqLMJfjbzqPwIKWuItiIR57El8",
+  authDomain: "reading-log-chrome-extension.firebaseapp.com",
+  projectId: "reading-log-chrome-extension",
+  storageBucket: "reading-log-chrome-extension.firebasestorage.app",
+  messagingSenderId: "183603389063",
+  appId: "1:183603389063:web:d33467ec73c575c786ce22",
+  measurementId: "G-XNQMQ4M90S"
+};
+
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export { getAuth }; // Explicitly export getAuth
 
 export async function saveLogToFirestore(logData) {
-  // Ensure logData fields are properly validated
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+
   const body = {
     fields: {
-      title:       { stringValue: logData.title },
-      author:      { stringValue: logData.author },
-      link:        { stringValue: logData.link },
-      form:        { stringValue: logData.form || "" },  // Handle missing form data
-      genre:       { stringValue: logData.genre || "" }, // Handle missing genre data
-      rating:      { integerValue: logData.rating || 0 }, // Don't convert rating to string
-      wordsRead:   { integerValue: logData.wordsRead || 0 }, // Don't convert wordsRead to string
-      notes:       { stringValue: logData.notes || "" },  // Handle missing notes
-      timestamp:   { timestampValue: new Date().toISOString() }
-    }
+      uid: { stringValue: user.uid }, // Associate log with the user's UID
+      title: { stringValue: logData.title },
+      author: { stringValue: logData.author },
+      link: { stringValue: logData.link },
+      wordsRead: { integerValue: logData.wordsRead || 0 },
+      timestamp: { timestampValue: new Date().toISOString() },
+    },
   };
 
-  console.log("💬 Sending the following data to Firestore:", body);
-
-  try {
-    const res = await fetch(FIRESTORE_URL, {
+  const response = await fetch(
+    "https://firestore.googleapis.com/v1/projects/reading-log-chrome-extension/databases/(default)/documents/logs",
+    {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${await auth.currentUser.getIdToken()}`, // Use the user's ID token
+      },
       body: JSON.stringify(body),
-    });
-
-    if (!res.ok) {
-      console.error("🔥 Error:", res.status, await res.text());
-      throw new Error("Failed to save log");
     }
+  );
 
-    console.log("✅ Log saved to Firestore!");
-  } catch (err) {
-    console.error("🔥 Firestore error:", err);
+  if (!response.ok) {
+    throw new Error(`Failed to save log: ${response.statusText}`);
   }
+
+  console.log("✅ Log saved to Firestore!");
 }
 
 export async function getLogsFromFirestore() {
-  const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/works?key=${FIREBASE_API_KEY}`;
+  const auth = getAuth();
+  const user = auth.currentUser;
 
-  try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP error ${response.status}`);
-    const data = await response.json();
-    return data.documents || [];
-  } catch (error) {
-    console.error("Error fetching logs:", error);
-    return [];
+  if (!user) {
+    throw new Error("User not authenticated");
   }
+
+  const url = `${BASE_FIRESTORE_URL}/works?key=${FIREBASE_API_KEY}&where=uid=='${user.uid}'`;
+
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+  const data = await response.json();
+  return data.documents || [];
 }
 
 // 🚮 Delete a log
