@@ -39,4 +39,4 @@ We may update this Privacy Policy from time to time. We’ll notify users of sig
 8. Contact Us
 If you have any questions or concerns about this Privacy Policy or your data, please contact us at:
 
-📧 [sstephenson2@islander.tamucc.edu]
+📧 [sstephenson2@islander.tamucc.edu] / [gcavazos3@islander.tamucc.edu]
