@@ -110,27 +110,32 @@ document.addEventListener("DOMContentLoaded", async () => {
             e.preventDefault();
 
             try {
-                // Ensure the user is authenticated
-                const auth = getAuth();
-                if (!auth.currentUser) {
-                    alert("Please log in before saving your log.");
-                    return;
-                }
+                const title = document.getElementById("title").value || "(No Title)";
+                const author = document.getElementById("author").value || "(No Author)";
+                const link = document.getElementById("link").value || "#";
+                const genre = document.getElementById("genre").value || "Unknown"; // Ensure this matches the genre input's ID
+                const form = document.getElementById("form").value || "Unknown"; // Ensure this matches the form input's ID
+                const rating = parseInt(document.querySelector(".rating span.selected")?.getAttribute("data-value") || "0", 10);
+                const notes = document.getElementById("notes").value || "";
 
-                // Collect form data
                 const logData = {
-                    title: document.getElementById("title").value,
-                    author: document.getElementById("author").value,
-                    link: document.getElementById("link").value,
-                    wordsRead: parseInt(document.getElementById("wordsRead").value, 10),
+                    title,
+                    author,
+                    link,
+                    genre,
+                    form,
+                    rating,
+                    notes,
+                    wordsRead: parseInt(document.getElementById("wordsRead").value || "0", 10),
                 };
 
-                console.log("🚀 Sending log data to Firestore...");
-                await saveLogToFirestore(logData);
-                alert("Your log has been saved!");
+                console.log("🚀 Saving log data:", logData);
+
+                await saveLogToFirestore(logData); // Ensure this function is implemented correctly
+                alert("Log saved successfully!");
             } catch (error) {
-                console.error("🔥 Error saving log to Firestore:", error);
-                alert("There was an error saving your log.");
+                console.error("🔥 Error saving log:", error);
+                alert("Failed to save the log. Please try again.");
             }
         });
     } else {

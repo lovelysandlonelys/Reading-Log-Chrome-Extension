@@ -1,52 +1,80 @@
-
-
 import { getLogsFromFirestore } from './firebase.js';
+import { auth } from './firebase.js';
 
-document.addEventListener("DOMContentLoaded", async () => {
-  // Fetch logs
-  const logs = await getLogsFromFirestore();
-  
-  if (logs.length > 0) {
-    // Calculate total words read
-    let totalWordsRead = 0;
-    const genreCount = {};
-    const formCount = {};
+document.addEventListener("DOMContentLoaded", () => {
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) {
+      console.error("❌ User not authenticated. Graphs cannot be generated.");
+      document.getElementById('totalWordsRead').textContent = "Please log in to view your stats.";
+      return;
+    }
 
-    // Count genres and forms, and calculate total words read
-    logs.forEach(log => {
-      const genre = log.fields.genre.stringValue;
-      const form = log.fields.form.stringValue;
-      const wordsRead = parseInt(log.fields.wordsRead.integerValue) || 0;
+    console.log("✅ User is authenticated:", user);
 
-      totalWordsRead += wordsRead;
-      
-      if (genre) {
+    try {
+      // Fetch logs
+      const logs = await getLogsFromFirestore();
+      console.log("📊 Logs fetched for graphs:", logs);
+
+      if (!logs || logs.length === 0) {
+        console.warn("⚠️ No logs found. Graphs will not be generated.");
+        document.getElementById('totalWordsRead').textContent = "No data available to display graphs.";
+        return;
+      }
+
+      // Initialize counters
+      let totalWordsRead = 0;
+      const genreCount = {};
+      const formCount = {};
+
+      // Process logs to calculate totals and counts
+      logs.forEach(log => {
+        const genre = log.fields.genre?.stringValue || "Unknown";
+        const form = log.fields.form?.stringValue || "Unknown";
+        const wordsRead = parseInt(log.fields.wordsRead?.integerValue || 0, 10);
+
+        totalWordsRead += wordsRead;
+
+        // Count genres
         genreCount[genre] = (genreCount[genre] || 0) + 1;
-      }
-      if (form) {
+
+        // Count forms
         formCount[form] = (formCount[form] || 0) + 1;
+      });
+
+      // Update total words read in the page
+      const totalWordsElement = document.getElementById('totalWordsRead');
+      if (totalWordsElement) {
+        totalWordsElement.textContent = `Total Words Read: ${totalWordsRead}`;
       }
-    });
 
-    // Update total words read in the page
-    document.getElementById('totalWordsRead').textContent = `Total Words Read: ${totalWordsRead}`;
+      // Prepare data for Pie Charts
+      const genreLabels = Object.keys(genreCount);
+      const genreData = Object.values(genreCount);
 
-    // Prepare data for Pie Charts
-    const genreLabels = Object.keys(genreCount);
-    const genreData = Object.values(genreCount);
+      const formLabels = Object.keys(formCount);
+      const formData = Object.values(formCount);
 
-    const formLabels = Object.keys(formCount);
-    const formData = Object.values(formCount);
-
-    // Generate Pie Charts
-    generatePieChart('genrePieChart', genreLabels, genreData, 'Genres');
-    generatePieChart('formPieChart', formLabels, formData, 'Forms');
-  }
+      // Generate Pie Charts
+      generatePieChart('genrePieChart', genreLabels, genreData, 'Genres');
+      generatePieChart('formPieChart', formLabels, formData, 'Forms');
+    } catch (error) {
+      console.error("🔥 Error generating graphs:", error);
+      document.getElementById('totalWordsRead').textContent = "Error loading data for graphs. Please try again later.";
+    }
+  });
 });
 
 function generatePieChart(canvasId, labels, data, label) {
-  const ctx = document.getElementById(canvasId).getContext('2d');
-  
+  const canvas = document.getElementById(canvasId);
+
+  if (!canvas) {
+    console.error(`🔥 Error: Canvas with ID "${canvasId}" not found.`);
+    return;
+  }
+
+  const ctx = canvas.getContext('2d');
+
   new Chart(ctx, {
     type: 'pie',
     data: {
@@ -54,24 +82,13 @@ function generatePieChart(canvasId, labels, data, label) {
       datasets: [{
         label: label,
         data: data,
-        backgroundColor: [
-            '#FFB6C1', // pink
-            '#FF69B4', // hot pink
-            '#FF1493', // deep pink
-            '#DA70D6', // orchid
-            '#9370DB', // medium purple
-            '#D8BFD8', // thistle
-            '#DDA0DD', // plum
-            '#EE82EE', // violet
-            '#C71585', // medium violet red
-            '#8B008B'  // dark magenta
-          ],          
+        backgroundColor: generateColors(data.length),
         borderColor: '#fff',
         borderWidth: 1
       }]
     },
     options: {
-      responsive: false,
+      responsive: true,
       plugins: {
         legend: {
           position: 'right',
@@ -79,11 +96,31 @@ function generatePieChart(canvasId, labels, data, label) {
         tooltip: {
           callbacks: {
             label: function(tooltipItem) {
-              return tooltipItem.label + ': ' + tooltipItem.raw + ' entries';
+              return `${tooltipItem.label}: ${tooltipItem.raw} entries`;
             }
           }
         }
       }
     }
   });
+}
+
+function generateColors(count) {
+  const colors = [
+    '#28002b', // Dark purple (matches activity bar background)
+    '#4a004d', // Slightly lighter purple
+    '#6e0070', // Medium purple
+    '#900093', // Bright purple
+    '#b300b6', // Vibrant purple
+    '#d500d9', // Light purple
+    '#edfff1', // Light green (matches title bar foreground)
+    '#a8ffcc', // Soft green
+    '#70ffb3', // Bright green
+    '#38ff99'  // Vibrant green
+  ];
+  const generatedColors = [];
+  for (let i = 0; i < count; i++) {
+    generatedColors.push(colors[i % colors.length]); // Cycle through colors if count exceeds the palette
+  }
+  return generatedColors;
 }

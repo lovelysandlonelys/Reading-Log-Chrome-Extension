@@ -39,32 +39,32 @@
                 <label for="form">Form:</label>
                 <select id="form" name="form">
                     <option value="" disabled selected hidden>[select]</option>
-                    <option value="book">Book</option>
-                    <option value="ebook">eBook</option>
-                    <option value="manga">Manga</option>
-                    <option value="poetry">Poetry</option>
-                    <option value="essay">Essay</option>
+                    <option value="Book">Book</option>
+                    <option value="eBook">eBook</option>
+                    <option value="Manga">Manga</option>
+                    <option value="Poetry">Poetry</option>
+                    <option value="Essay">Essay</option>
                     <option value="Article">Article</option>
-                    <option value="shortStory">Short Story</option>
-                    <option value="recipe">Recipe</option>
-                    <option value="other">Other</option>
+                    <option value="Short Story">Short Story</option>
+                    <option value="Recipe">Recipe</option>
+                    <option value="Other">Other</option>
                 </select>
 
                 <label for="genre">Genre:</label>
                 <select id="genre" name="genre">
                     <option value="" disabled selected hidden>[select]</option>
-                    <option value="fantasy">Fantasy</option>
-                    <option value="scienceFiction">Science Fiction</option>
-                    <option value="romance">Romance</option>
-                    <option value="horror">Horror</option>
-                    <option value="mystery">Mystery</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="informative">Informative</option>
-                    <option value="news">News</option>
-                    <option value="recipe">Recipe</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Science Fiction">Science Fiction</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Mystery">Mystery</option>
+                    <option value="Adventure">Adventure</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Informative">Informative</option>
+                    <option value="News">News</option>
+                    <option value="Recipe">Recipe</option>
                     <option value="Fanfiction">Fanfiction</option>
-                    <option value="other">Other</option>
+                    <option value="Other">Other</option>
                 </select>
 
                 <label>Rating:</label>
@@ -162,18 +162,21 @@
         </div> <!-- End of History Tab -->
     
         <div id="Stats" class="tabcontent">
-            <h1>Stats</h1>
+            <h1>📊 Stats</h1>
             <div class="words-box">
-                <h1 id="totalWordsRead">Total Words Read: Loading...</h1>
+                <words-box id="totalWordsRead">Total Words Read: Loading...</words-box>
                 <div class="confetti"></div>
-            </div>    
+            </div>
             <div class="charts-container">
-                <div id="chartsContainer" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
-                    <p style = "font-size: 16px">Genres Read</p>
-                    <canvas id="genrePieChart" width="340" height="200"></canvas>
-                    <p style = "font-size: 16px">Forms Read</p>
-                    <canvas id="formPieChart" width="340" height="200"></canvas>
+                <div class="chart">
+                    <h2>Genres Read</h2>
+                    <canvas id="genrePieChart"></canvas>
                 </div>
+                <div class="chart">
+                    <h2>Forms Read</h2>
+                    <canvas id="formPieChart"></canvas>
+                </div>
+            </div>
         </div> <!-- End of Stats Tab -->
 
     </div> <!-- End of popup container -->

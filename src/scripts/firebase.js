@@ -12,6 +12,7 @@ const firebaseConfig = {
   appId: "1:183603389063:web:d33467ec73c575c786ce22",
   measurementId: "G-XNQMQ4M90S"
 };
+const BASE_FIRESTORE_URL = "https://firestore.googleapis.com/v1/projects/reading-log-chrome-extension/databases/(default)/documents";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -35,6 +36,10 @@ export async function saveLogToFirestore(logData) {
     throw new Error("User not authenticated");
   }
 
+  // Define the Firestore URL for saving logs
+  const url = `${BASE_FIRESTORE_URL}/logs`;
+
+  // Construct the body with all fields, including the user's UID and timestamp
   const body = {
     fields: {
       uid: { stringValue: user.uid }, // Associate log with the user's UID
@@ -46,27 +51,25 @@ export async function saveLogToFirestore(logData) {
       wordsRead: { integerValue: logData.wordsRead || 0 },
       rating: { integerValue: logData.rating || 0 },
       notes: { stringValue: logData.notes || "" },
-      timestamp: { timestampValue: new Date().toISOString() },
+      timestamp: { timestampValue: new Date().toISOString() }, // Add a timestamp
     },
   };
 
-  const response = await fetch(
-    "https://firestore.googleapis.com/v1/projects/reading-log-chrome-extension/databases/(default)/documents/logs",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
-      },
-      body: JSON.stringify(body),
-    }
-  );
+  // Send the POST request to Firestore
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
+    },
+    body: JSON.stringify(body),
+  });
 
   if (!response.ok) {
     throw new Error(`Failed to save log: ${response.statusText}`);
   }
 
-  console.log("✅ Log saved to Firestore!");
+  console.log("✅ Log saved successfully:", await response.json());
 }
 
 export async function getLogsFromFirestore() {
@@ -113,48 +116,28 @@ export async function getLogsFromFirestore() {
 
 // 🚮 Delete a log
 export async function deleteLogFromFirestore(logId) {
-  const url = `${BASE_FIRESTORE_URL}/${COLLECTION_PATH}/${logId}?key=${FIREBASE_API_KEY}`;
+  const auth = getAuth();
+  const user = auth.currentUser;
 
-  try {
-    const res = await fetch(url, {
-      method: "DELETE",
-    });
-
-    if (!res.ok) throw new Error(`Failed to delete log: ${res.status}`);
-    console.log("🗑️ Log deleted!");
-  } catch (err) {
-    console.error("🔥 Error deleting log:", err);
+  if (!user) {
+    throw new Error("User not authenticated");
   }
-}
 
-// 🛠️ Update a log ---------------------------------------------------------------------------In Progress
-export async function updateLogInFirestore(logId, updatedData) {
-  const url = `${BASE_FIRESTORE_URL}/${COLLECTION_PATH}/${logId}?key=${FIREBASE_API_KEY}`;
+  const url = `${BASE_FIRESTORE_URL}/logs/${logId}`;
 
-  const body = {
-    fields: {
-      title:     { stringValue: updatedData.title },
-      author:    { stringValue: updatedData.author },
-      link:      { stringValue: updatedData.link },
-      form:      { stringValue: updatedData.form || "" },
-      genre:     { stringValue: updatedData.genre || "" },
-      rating:    { integerValue: updatedData.rating || 0 },
-      wordsRead: { integerValue: updatedData.wordsRead || 0 },
-      notes:     { stringValue: updatedData.notes || "" },
-      timestamp: { timestampValue: new Date().toISOString() },
+  console.log(`🗑️ Deleting log at URL: ${url}`);
+
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
     },
-  };
+  });
 
-  try {
-    const res = await fetch(url, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-
-    if (!res.ok) throw new Error(`Failed to update log: ${res.status}`);
-    console.log("📝 Log updated!");
-  } catch (err) {
-    console.error("🔥 Error updating log:", err);
+  if (!response.ok) {
+    throw new Error(`Failed to delete log: ${response.statusText}`);
   }
+
+  console.log(`✅ Log with ID "${logId}" deleted from Firestore.`);
 }

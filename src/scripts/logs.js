@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <p><strong>Author:</strong> ${author}</p>
           <p><strong>Genre:</strong> ${genre} | <strong>Form:</strong> ${formVal}</p>
-          <p><strong>Words Read:</strong> <span class="words-read">${words}</span></p>
+          <p><strong>Words Read:</strong> ${words}</p>
           <p><strong>Rating:</strong> ${"★".repeat(rating)}${"☆".repeat(5 - rating)}</p>
           <p><em>${notes}</em></p>
           <div class="log-entry-actions">
@@ -71,13 +71,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const deleteBtn = entry.querySelector(".delete-btn");
         if (deleteBtn) {
           deleteBtn.addEventListener("click", async () => {
-            if (confirm(`Delete "${title}"?`)) {
-              try {
-                await deleteLogFromFirestore(logId);
-                entry.remove();
-                console.log(`✅ Log "${title}" deleted successfully.`);
-              } catch (error) {
-                console.error(`🔥 Error deleting log "${title}":`, error);
+            const confirmation = confirm(`Are you sure you want to delete "${title}"?`);
+            if (!confirmation) return;
+
+            try {
+              console.log(`🗑️ Attempting to delete log with ID: ${logId}`);
+              await deleteLogFromFirestore(logId); // Call Firestore delete function
+              entry.remove(); // Remove the log entry from the DOM
+              console.log(`✅ Log "${title}" deleted successfully.`);
+            } catch (error) {
+              console.error(`🔥 Error deleting log "${title}":`, error);
+
+              // Provide a more user-friendly error message
+              if (error.message.includes("permission")) {
+                alert("You do not have permission to delete this log.");
+              } else {
                 alert("Failed to delete the log. Please try again.");
               }
             }

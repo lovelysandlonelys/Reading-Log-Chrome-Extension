@@ -5,12 +5,13 @@ body {
     padding: 0;
 }
 
+/* Popup Container */
 .popup-container {
     background-color: #ffffff; /* White container background */
     padding: 0;
     border-radius: 12px;
-    width: 380px;
-    height: 600px;
+    width: 360px; /* Slightly smaller width for better fit */
+    height: 580px; /* Reduced height for better balance */
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -36,7 +37,7 @@ h1 {
 }
 
 p {
-    color: #4a4a4a; /* Neutral dark gray */
+    color: #3f3f3f; /* Neutral dark gray */
     font-size: 14px;
     padding-left: 15px;
 }
@@ -108,6 +109,9 @@ button:hover {
     overflow: hidden;
     margin: 0;
     padding: 0;
+    position: sticky; /* Keep the tab buttons visible at the top */
+    top: 0;
+    z-index: 10; /* Ensure the tabs are above other content */
 }
 
 .tablinks {
@@ -135,9 +139,11 @@ button:hover {
 
 .tabcontent {
     display: none;
-    padding: 5px;
+    padding: 10px;
     flex-grow: 1;
-    overflow-y: auto;
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    height: calc(100% - 50px); /* Adjust height to leave space for tab buttons */
+    box-sizing: border-box; /* Ensure padding is included in height calculation */
 }
 
 .log-entry {
@@ -254,4 +260,90 @@ button:hover {
 
 #applyFilters:hover {
     background-color: #388e3c; /* Slightly darker green on hover */
+}
+
+/* Stats Tab Styles */
+#Stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px; /* Reduced padding for better fit */
+    gap: 15px; /* Reduced gap for better spacing */
+}
+
+/* Words Box */
+.words-box {
+    position: relative;
+    background: linear-gradient(145deg, #e8f5e9, #c8e6c9); /* Light green gradient */
+    padding: 20px 30px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4); /* Green shadow */
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #000000; /* Dark green text */
+    overflow: hidden;
+}
+
+.confetti {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #a5d6a7 2px, transparent 2px), /* Light green */
+                    radial-gradient(circle, #81c784 2px, transparent 2px), /* Medium green */
+                    radial-gradient(circle, #66bb6a 2px, transparent 2px), /* Darker green */
+                    radial-gradient(circle, #388e3c 2px, transparent 2px); /* Dark green */
+    background-size: 20px 20px;
+    animation: confettiFall 4s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes confettiFall {
+    from {
+        background-position: 0 0, 10px 0, 20px 0, 30px 0;
+    }
+    to {
+        background-position: 0 100px, 10px 100px, 20px 100px, 30px 100px;
+    }
+}
+
+/* Charts Container */
+.charts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Reduced gap for better spacing */
+    width: 100%;
+    padding: 10px; /* Reduced padding for better fit */
+}
+
+.chart {
+    width: 100%;
+    max-width: 340px; /* Slightly smaller max width */
+    text-align: center;
+    padding: 8px; /* Reduced padding inside the chart container */
+    background: #ffffff; /* White background for the chart container */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+}
+
+.chart h2 {
+    font-size: 16px; /* Slightly smaller font size */
+    color: #4caf50; /* Green for headings */
+    margin-bottom: 8px; /* Reduced margin for better spacing */
+}
+
+.chart canvas {
+    width: 100%;
+    max-width: 100%;
+    height: 180px; /* Reduced height for better fit */
+    max-height: 180px;
+    border: 1px solid #d1d5db; /* Light gray border for better separation */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 8px;
 }
