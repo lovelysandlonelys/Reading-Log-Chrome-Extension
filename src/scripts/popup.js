@@ -60,19 +60,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     const ratingStars = document.querySelectorAll(".rating span");
     let ratingValue = 0;
 
-    ratingStars.forEach(star => {
+    ratingStars.forEach((star) => {
         star.addEventListener("click", function () {
             // Remove "selected" class from all stars
-            ratingStars.forEach(star => star.classList.remove("selected"));
-            
+            ratingStars.forEach((star) => star.classList.remove("selected"));
+
             // Add "selected" class to all stars up to the clicked star
             let clickedIndex = Array.from(ratingStars).indexOf(this);
             for (let i = 0; i <= clickedIndex; i++) {
                 ratingStars[i].classList.add("selected");
             }
-            
+
             // Set the rating value based on clicked star's data-value
             ratingValue = parseInt(this.getAttribute("data-value"));
+            console.log("⭐ Selected rating:", ratingValue);
         });
     });
 
@@ -115,7 +116,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const link = document.getElementById("link").value || "#";
                 const genre = document.getElementById("genre").value || "Unknown"; // Ensure this matches the genre input's ID
                 const form = document.getElementById("form").value || "Unknown"; // Ensure this matches the form input's ID
-                const rating = parseInt(document.querySelector(".rating span.selected")?.getAttribute("data-value") || "0", 10);
+                const rating = ratingValue || "0"; // Use the selected rating value
                 const notes = document.getElementById("notes").value || "";
 
                 const logData = {
@@ -130,6 +131,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 };
 
                 console.log("🚀 Saving log data:", logData);
+                console.log("📤 Saving rating to Firestore:", logData.rating);
 
                 await saveLogToFirestore(logData); // Ensure this function is implemented correctly
                 alert("Log saved successfully!");
