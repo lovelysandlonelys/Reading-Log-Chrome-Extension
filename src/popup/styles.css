@@ -1,91 +1,89 @@
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #ffeefa;
+    background-color: #e8f5e9; /* Light green background */
     margin: 0;
     padding: 0;
-  }
-  
-  .popup-container {
-    background-color: #fff0f5;
-    padding: 0; /* Remove padding at top to ensure tabs are visible */
+}
+
+.popup-container {
+    background-color: #ffffff; /* White container background */
+    padding: 0;
     border-radius: 12px;
     width: 380px;
     height: 600px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Prevent content from spilling outside */
-  }
-  
-  .popup {
-    position: relative;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .popup-header {
-    margin: 0;
-    padding: 10px 20px; /* adjust for spacing inside the header */
-    position: relative; /* or static, as needed */
-    top: 0;
-  }
-  
-  h1 {
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.popup-header {
+    background-color: #4caf50; /* Green header */
+    color: #ffffff; /* White text */
+    padding: 10px 20px;
     text-align: center;
-    color: #d6336c;
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
-  
-  p {
-    color: #444;
+    font-size: 18px;
     font-weight: bold;
-    font-size: 12px;
+    border-bottom: 1px solid #388e3c; /* Slightly darker green border */
+}
+
+h1 {
+    text-align: center;
+    color: #4caf50; /* Green */
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+p {
+    color: #4a4a4a; /* Neutral dark gray */
+    font-size: 14px;
     padding-left: 15px;
-  }
-  
-  form {
+}
+
+form {
     display: flex;
     flex-direction: column;
     gap: 6px;
     flex-grow: 1;
-  }
-  
-  label {
-    color: #444;
+}
+
+label {
+    color: #4a4a4a; /* Neutral dark gray */
     font-weight: bold;
     font-size: 12px;
-  }
-  
-  input[type="text"],
-  select,
-  textarea {
+}
+
+input[type="text"],
+select,
+textarea {
     padding: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #d1d5db; /* Light gray border */
     border-radius: 8px;
-    background-color: #fff;
+    background-color: #ffffff; /* White background */
     font-size: 12px;
     box-sizing: border-box;
-  }
-  
-  textarea {
+    color: #4caf50; /* Green text */
+}
+
+textarea {
     resize: none;
     height: 70px;
-  }
-  
-  .rating span {
-    font-size: 20px; /* Size of stars */
+}
+
+.rating span {
+    font-size: 20px;
     cursor: pointer;
-    color: #ccc; /* Default color for stars */
-  }
-  
-  .rating span:hover,
-  .rating span.selected {
-    color: #ffc107; /* Color for selected stars */
-  }
-  
-  button {
-    background-color: #ff69b4;
+    color: #d1d5db; /* Light gray for unselected stars */
+}
+
+.rating span:hover,
+.rating span.selected {
+    color: #9c27b0; /* Purple for selected stars */
+}
+
+button {
+    background-color: #4caf50; /* Green button */
     color: white;
     padding: 8px;
     border: none;
@@ -94,30 +92,27 @@ body {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 10px;  /* Increased space between button and form elements */
+    margin-top: 10px;
     margin-bottom: 10px;
-  }
-  
-  button:hover {
-    background-color: #ff85c1;
-  }
-  
-  /* Style the tab container to be visible at the top */
-  .tab {
+}
+
+button:hover {
+    background-color: #388e3c; /* Slightly darker green on hover */
+}
+
+.tab {
     display: flex;
-    background-color: #fff0f5;
-    border-bottom: 1px solid #ffb6c1;
+    background-color: #e8f5e9; /* Light green */
+    border-bottom: 1px solid #c8e6c9;
     width: 100%;
     overflow: hidden;
     margin: 0;
     padding: 0;
-    flex-shrink: 0; /* Prevent tab from shrinking */
-  }
-  
-  /* Make sure tab buttons are properly sized */
-  .tablinks {
+}
+
+.tablinks {
     flex: 1;
-    background-color: #ffeefa;
+    background-color: #ffffff; /* White background */
     border: none;
     margin: 0;
     padding: 6px 0;
@@ -125,88 +120,128 @@ body {
     cursor: pointer;
     transition: background-color 0.3s;
     border-radius: 10px 10px 0 0;
-  }
-  
-  .tablinks:hover {
-    background-color: #ffcce0;
-  }
-  
-  .tablinks.active {
-    background-color: #ff85c1;
+    color: #4caf50; /* Green text */
+}
+
+.tablinks:hover {
+    background-color: #c8e6c9; /* Light green on hover */
+}
+
+.tablinks.active {
+    background-color: #9c27b0; /* Purple for active tab */
     color: white;
-    border-bottom: 1px solid #ff85c1;
-  }
-  
-  /* Style the content area */
-  .tabcontent {
+    border-bottom: 1px solid #9c27b0;
+}
+
+.tabcontent {
     display: none;
     padding: 5px;
     flex-grow: 1;
-    overflow-y: auto; /* Allow scrolling if content is too tall */
-  }
-  
-  /* Make sure one tab is visible by default */
-  #Log {
-    display: block;
-  }
-  
-  #History.popup-container {
-    width: 420px;
-    height: auto;
-  }
-  
-  .log-entry {
-    background: #fff5fa;
-    border: 1px solid #ffb6c1;
+    overflow-y: auto;
+}
+
+.log-entry {
+    background: #ffffff; /* White background */
+    border: 1px solid #d1d5db; /* Light gray border */
     padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 10px;
-  }
-  
-  .filter-container {
-    border: 1px solid #ffd6e7;
-    background-color: #fff8fb;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.log-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #4caf50; /* Green */
+}
+
+.log-entry-header a {
+    text-decoration: none;
+    color: #9c27b0; /* Purple for links */
+}
+
+.log-entry-header a:hover {
+    text-decoration: underline;
+    color: #7b1fa2; /* Slightly darker purple on hover */
+}
+
+.log-entry-actions {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.log-entry-actions .delete-btn {
+    background-color: #7b1fa2; /* Pink for delete button */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.log-entry-actions .delete-btn:hover {
+    background-color: #520c70; /* Darker pink on hover */
+}
+
+.words-read {
+    position: relative;
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff; /* White text */
+    background: linear-gradient(135deg, #4caf50, #9c27b0); /* Green to purple gradient */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.filter-container {
+    border: 1px solid #c8e6c9; /* Light green border */
+    background-color: #ffffff; /* White background */
     padding: 8px;
     border-radius: 12px;
     margin: 5px 0;
-    box-shadow: 0 2px 6px rgba(255, 105, 180, 0.15);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     display: flex;
     flex-direction: column;
     gap: 6px;
-  }
-  
-  .filter-container h3 {
-    color: #d6336c;
+}
+
+.filter-container h3 {
+    color: #4caf50; /* Green */
     font-size: 16px;
     margin-bottom: 4px;
     text-align: center;
-  }
-  
-  .filter-container label {
+}
+
+.filter-container label {
     font-size: 12px;
     font-weight: bold;
-    color: #444;
-  }
-  
-  .filter-container input[type="text"],
-  .filter-container select {
+    color: #4a4a4a; /* Neutral dark gray */
+}
+
+.filter-container input[type="text"],
+.filter-container select {
     padding: 4px;
     font-size: 12px;
-    border: 1px solid #ddd;
+    border: 1px solid #d1d5db; /* Light gray border */
     border-radius: 8px;
-    background-color: #fff;
+    background-color: #ffffff; /* White background */
+    color: #4caf50; /* Green text */
     transition: border-color 0.3s;
-  }
-  
-  .filter-container input[type="text"]:focus,
-  .filter-container select:focus {
-    border-color: #ff69b4;
+}
+
+.filter-container input[type="text"]:focus,
+.filter-container select:focus {
+    border-color: #9c27b0; /* Purple focus */
     outline: none;
-  }
-  
-  #applyFilters {
+}
+
+#applyFilters {
     align-self: center;
-    background-color: #ff69b4;
+    background-color: #4caf50; /* Green button */
     color: white;
     padding: 6px 16px;
     border: none;
@@ -215,129 +250,8 @@ body {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
-  
-  #applyFilters:hover {
-    background-color: #ff85c1;
-  }
-  
-  .filter-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-  
-  .filter-item {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .filter-item label {
-    font-size: 12px;
-    font-weight: bold;
-    color: #555;
-    margin-bottom: 2px;
-  }
-  
-  /* log entry stuff */
+}
 
-  .log-entry {
-    position: relative;
-    padding-bottom: 1.5em;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 1em;
-    background: #fff;
-  }
-
-  .log-entry-actions {
-    padding-left: 10px;
-  }
-  
-  .log-entry-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .log-entry-actions button {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .log-entry-actions button:hover {
-    color: #000;
-  }
-
-  .log-entry .editable[contenteditable="true"] {
-    border-bottom: 1px dashed #999;
-    background-color: #f0f0f0;
-    padding: 0 2px;
-  }
-
-  .log-entry-actions i {
-    font-size: 0.8em;
-    color: #444
-  }
-  
-  .log-entry a {
-    color: #e91e63; /* or any shade of pink you like */
-    text-decoration: none;
-  }
-  
-  .log-entry a:hover {
-    text-decoration: underline;
-    color: #d81b60; /* optional: a slightly darker pink on hover */
-  }
-  
-/* chart stuff */
-.charts-container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 5px;
-  }
-  
-  #genrePieChart, #formPieChart {
-    width: 45%;
-    height: 300px;
-  }
-  
-  .words-box {
-    position: relative;
-    background: linear-gradient(145deg, #ffe0f0, #fce4ec);
-    padding: 20px 30px;
-    margin-bottom: 30px;
-    border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4);
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
-    color: #c71585;
-    overflow: hidden;
-  }
-  
-  .confetti {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0; left: 0;
-    pointer-events: none;
-    background-image: radial-gradient(circle, #ffb6c1 2px, transparent 2px),
-                      radial-gradient(circle, #db7093 2px, transparent 2px),
-                      radial-gradient(circle, #dda0dd 2px, transparent 2px),
-                      radial-gradient(circle, #ba55d3 2px, transparent 2px);
-    background-size: 20px 20px;
-    animation: confettiFall 4s linear infinite;
-    opacity: 0.5;
-  }
-  
-  @keyframes confettiFall {
-    from {
-      background-position: 0 0, 10px 0, 20px 0, 30px 0;
-    }
-    to {
-      background-position: 0 100px, 10px 100px, 20px 100px, 30px 100px;
-    }
-  }
-  
+#applyFilters:hover {
+    background-color: #388e3c; /* Slightly darker green on hover */
+}

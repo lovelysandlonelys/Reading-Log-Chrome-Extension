@@ -5,10 +5,7 @@
   <meta charset="UTF-8">
   <title>Reading Log</title>
   <link rel="stylesheet" href="styles.css">
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 
 <body>
@@ -161,7 +158,7 @@
                 <button id="applyFilters">Apply Filters</button>
             </div>
             
-            <div id="historyContainer"></div> <!-- Container to display logs -->
+            <div id="historyLogsContainer" class="history-container"></div> <!-- Container to display logs -->
         </div> <!-- End of History Tab -->
     
         <div id="Stats" class="tabcontent">
@@ -182,13 +179,13 @@
     </div> <!-- End of popup container -->
 
     <!-- Scripts -->
-    <script src="../scripts/tabs.js"></script>
-    <script src="../scripts/scripts.js"></script>
-    <script src="../scripts/filters.js"></script>
+    <script src="../scripts/tabs.js" defer></script>
+    <script src="../scripts/scripts.js" defer></script>
+    <script src="../scripts/filters.js" defer></script>
+    <script src="../scripts/chart.js" defer></script>
     <script type="module" src="../scripts/popup.js"></script>
     <script type="module" src="../scripts/logs.js"></script>
-    <script src="../scripts/chart.js"></script>
-    <script type= "module" src="../scripts/graphs.js"></script>
+    <script type="module" src="../scripts/graphs.js"></script>
 
 </body> <!-- End of Body -->
 </html> <!-- End of html -->
