@@ -1,7 +1,7 @@
 // firebase.js
 // filepath: c:\Users\steph\Dev\Reading-Log-Chrome-Extension\src\scripts\firebase.js
 import { initializeApp } from "./firebase-app.js"; // Local file
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "./firebase-auth.js"; // Local file
+import { getAuth, setPersistence, browserLocalPersistence, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "./firebase-auth.js"; // Local file
 
 const firebaseConfig = {
   apiKey: "AIzaSyCOpGI0AUqLMJfjbzqPwIKWuItiIR57El8",
@@ -14,8 +14,18 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export { getAuth }; // Explicitly export getAuth
+const auth = getAuth(app);
+
+// Set persistence to local before any authentication actions
+setPersistence(auth, browserLocalPersistence)
+  .then(() => {
+    console.log("Authentication persistence set to local.");
+  })
+  .catch((error) => {
+    console.error("Error setting authentication persistence:", error);
+  });
+
+export { auth, getAuth };
 
 export async function saveLogToFirestore(logData) {
   const auth = getAuth();
@@ -28,10 +38,14 @@ export async function saveLogToFirestore(logData) {
   const body = {
     fields: {
       uid: { stringValue: user.uid }, // Associate log with the user's UID
-      title: { stringValue: logData.title },
-      author: { stringValue: logData.author },
-      link: { stringValue: logData.link },
+      title: { stringValue: logData.title || "(No Title)" },
+      author: { stringValue: logData.author || "(No Author)" },
+      link: { stringValue: logData.link || "#" },
+      genre: { stringValue: logData.genre || "Unknown" },
+      form: { stringValue: logData.form || "Unknown" },
       wordsRead: { integerValue: logData.wordsRead || 0 },
+      rating: { integerValue: logData.rating || 0 },
+      notes: { stringValue: logData.notes || "" },
       timestamp: { timestampValue: new Date().toISOString() },
     },
   };
@@ -42,7 +56,7 @@ export async function saveLogToFirestore(logData) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${await auth.currentUser.getIdToken()}`, // Use the user's ID token
+        Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
       },
       body: JSON.stringify(body),
     }
@@ -63,12 +77,38 @@ export async function getLogsFromFirestore() {
     throw new Error("User not authenticated");
   }
 
-  const url = `${BASE_FIRESTORE_URL}/works?key=${FIREBASE_API_KEY}&where=uid=='${user.uid}'`;
+  const url = `https://firestore.googleapis.com/v1/projects/reading-log-chrome-extension/databases/(default)/documents:runQuery`;
 
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+  const body = {
+    structuredQuery: {
+      from: [{ collectionId: "logs" }],
+      where: {
+        fieldFilter: {
+          field: { fieldPath: "uid" },
+          op: "EQUAL",
+          value: { stringValue: user.uid },
+        },
+      },
+    },
+  };
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch logs: ${response.statusText}`);
+  }
+
   const data = await response.json();
-  return data.documents || [];
+  return data
+    .filter((doc) => doc.document) // Filter out non-document results
+    .map((doc) => doc.document); // Extract the document data
 }
 
 // 🚮 Delete a log

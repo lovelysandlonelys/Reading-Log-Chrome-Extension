@@ -1,6 +1,6 @@
-import { saveLogToFirestore } from "./firebase.js";
+import { saveLogToFirestore, getLogsFromFirestore } from "./firebase.js";
 import { googleLogin } from "./auth.js";
-import { getAuth } from "./firebase.js"; // Ensure this is correctly imported
+import { getAuth, auth } from "./firebase.js"; // Ensure this is correctly imported
 
 document.addEventListener("DOMContentLoaded", async () => {
     console.log("✅ DOM content loaded, running popup.js");
@@ -80,16 +80,41 @@ document.addEventListener("DOMContentLoaded", async () => {
     const loginButton = document.getElementById("loginButton");
     const userInfo = document.getElementById("userInfo");
     const readingForm = document.getElementById("readingForm");
+    const historyContainer = document.getElementById("historyContainer");
+    const graphContainer = document.getElementById("graphContainer");
 
-    // Handle login
+    // Monitor authentication state
+    auth.onAuthStateChanged(async (user) => {
+        if (user) {
+            console.log("✅ User is logged in:", user);
+            userInfo.textContent = `Logged in as: ${user.displayName}`;
+            loginButton.style.display = "none";
+
+            // Fetch and display logs
+            try {
+                const logs = await getLogsFromFirestore();
+                logs.forEach((log) => {
+                    const logElement = document.createElement("div");
+                    logElement.textContent = `${log.fields.title.stringValue} - ${log.fields.author.stringValue}`;
+                    historyContainer.appendChild(logElement);
+                });
+            } catch (error) {
+                console.error("🔥 Error fetching logs:", error);
+            }
+        } else {
+            console.log("❌ User is not logged in");
+            userInfo.textContent = "Not logged in";
+            loginButton.style.display = "block";
+        }
+    });
+
+    // Handle login button click
     loginButton.addEventListener("click", async () => {
         try {
             const user = await googleLogin();
-            userInfo.textContent = `Logged in as: ${user.displayName}`;
-            loginButton.style.display = "none";
+            console.log("✅ User logged in:", user);
         } catch (error) {
-            console.error("Login failed:", error);
-            userInfo.textContent = "Login failed. Please try again.";
+            console.error("🔥 Login failed:", error);
         }
     });
 
@@ -125,4 +150,64 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
         console.error("🔥 Error: 'readingForm' not found");
     }
+
+    // Display user logs and create graphs
+    try {
+        const logs = await getLogsFromFirestore();
+        console.log("📚 User logs:", logs);
+
+        // Display logs in history
+        logs.forEach((log) => {
+            const logElement = document.createElement("div");
+            logElement.textContent = `${log.fields.title.stringValue} - ${log.fields.author.stringValue}`;
+            historyContainer.appendChild(logElement);
+        });
+
+        // Use logs to create graphs
+        const wordCounts = logs.map((log) => log.fields.wordsRead.integerValue);
+        createGraph(graphContainer, wordCounts);
+    } catch (error) {
+        console.error("🔥 Error fetching logs:", error);
+    }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const historyContainer = document.getElementById("historyContainer");
+
+    if (!historyContainer) {
+        console.error("🔥 Error: 'historyContainer' element not found in the DOM.");
+        return;
+    }
+
+    // Monitor authentication state
+    auth.onAuthStateChanged(async (user) => {
+        if (user) {
+            console.log("✅ User is logged in:", user);
+
+            // Fetch and display logs
+            try {
+                const logs = await getLogsFromFirestore();
+                if (!logs || logs.length === 0) {
+                    console.log("No logs found for the user.");
+                    return;
+                }
+
+                logs.forEach((log) => {
+                    const logElement = document.createElement("div");
+                    logElement.textContent = `${log.fields.title.stringValue} - ${log.fields.author.stringValue}`;
+                    historyContainer.appendChild(logElement);
+                });
+            } catch (error) {
+                console.error("🔥 Error fetching logs:", error);
+            }
+        } else {
+            console.log("❌ User is not logged in");
+        }
+    });
+});
+
+// Example function to create a graph
+function createGraph(container, data) {
+    // Use a library like Chart.js or create a simple graph
+    console.log("📊 Creating graph with data:", data);
+}
