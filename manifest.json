@@ -1,0 +1,24 @@
+{
+  "name": "Reading Log",
+  "description": "Log your read works!",
+  "version": "1.0",
+  "manifest_version": 3,
+
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": "src/images/icon.png"
+  },
+
+  "permissions": ["identity", "scripting", "activeTab", "tabs", "storage"],
+
+  "oauth2": {
+    "client_id": "183603389063-386pleldsl0l0ganuctsi6a465112vuq.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/userinfo.profile"]
+  },
+
+  "host_permissions": ["<all_urls>", "https://firestore.googleapis.com/"],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+}
+}

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Reading Log</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+
+<body>
+    <div class="popup-container">
+
+        <div id="authContainer">
+          <p id="userInfo">Not logged in</p>
+          <button id="loginButton">Login</button>
+        </div>
+
+        <div class="tab">
+            <button class="tablinks" data-tab="Log">Log</button>
+            <button class="tablinks" data-tab="History">History</button>
+            <button class="tablinks" data-tab="Stats">Stats</button>
+        </div>
+
+        <div id="Log" class="tabcontent">
+        
+            <h1>📚 Log Your Reading</h1>
+            
+            <form id="readingForm">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title">
+
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author">
+
+                <label for="link">Link:</label>
+                <input type="text" id="link" name="link">
+
+                <label for="form">Form:</label>
+                <select id="form" name="form">
+                    <option value="" disabled selected hidden>[select]</option>
+                    <option value="Book">Book</option>
+                    <option value="eBook">eBook</option>
+                    <option value="Manga">Manga</option>
+                    <option value="Poetry">Poetry</option>
+                    <option value="Essay">Essay</option>
+                    <option value="Article">Article</option>
+                    <option value="Short Story">Short Story</option>
+                    <option value="Recipe">Recipe</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label for="genre">Genre:</label>
+                <select id="genre" name="genre">
+                    <option value="" disabled selected hidden>[select]</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Science Fiction">Science Fiction</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Mystery">Mystery</option>
+                    <option value="Adventure">Adventure</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Informative">Informative</option>
+                    <option value="News">News</option>
+                    <option value="Recipe">Recipe</option>
+                    <option value="Fanfiction">Fanfiction</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label>Rating:</label>
+                <div class="rating" id="rating">
+                    <span data-value="1">&#9733;</span>
+                    <span data-value="2">&#9733;</span>
+                    <span data-value="3">&#9733;</span>
+                    <span data-value="4">&#9733;</span>
+                    <span data-value="5">&#9733;</span>
+                </div>
+
+                <label for="wordsRead">Words Read:</label>
+                <input type="text" id="wordsRead" name="wordsRead" placeholder="(for this specific work)">
+
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" rows="4" placeholder="Optional notes..."></textarea>
+
+                <button type="submit" id="submitButton">Log</button>
+
+            </form> <!-- End of Reading Form -->
+
+        </div> <!-- End of Log Tab -->
+
+        <div id="History" class="tabcontent">
+            <h1>History</h1>
+
+            <!-- Filter Section -->
+            <div class="filter-container">
+                <h3>🔍 Filter Logs</h3>
+                <div class="filter-grid">
+            
+                <div class="filter-item">
+                    <label for="filterTitle">Title</label>
+                    <input type="text" id="filterTitle" placeholder="Enter title...">
+                </div>
+            
+                <div class="filter-item">
+                    <label for="filterAuthor">Author</label>
+                    <input type="text" id="filterAuthor" placeholder="Enter author...">
+                </div>
+            
+                <div class="filter-item">
+                    <label for="filterGenre">Genre</label>
+                    <select id="filterGenre">
+                    <option value="">All Genres</option>
+                    <option value="fantasy">Fantasy</option>
+                    <option value="scienceFiction">Science Fiction</option>
+                    <option value="romance">Romance</option>
+                    <option value="horror">Horror</option>
+                    <option value="mystery">Mystery</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="comedy">Comedy</option>
+                    <option value="informative">Informative</option>
+                    <option value="news">News</option>
+                    <option value="recipe">Recipe</option>
+                    <option value="Fanfiction">Fanfiction</option>
+                    <option value="other">Other</option>
+                    </select>
+                </div>
+            
+                <div class="filter-item">
+                    <label for="filterForm">Form</label>
+                    <select id="filterForm">
+                    <option value="">All Forms</option>
+                    <option value="book">Book</option>
+                    <option value="ebook">eBook</option>
+                    <option value="manga">Manga</option>
+                    <option value="poetry">Poetry</option>
+                    <option value="essay">Essay</option>
+                    <option value="article">Article</option>
+                    <option value="shortStory">Short Story</option>
+                    <option value="recipe">Recipe</option>
+                    <option value="other">Other</option>
+                    </select>
+                </div>
+            
+                <div class="filter-item">
+                    <label for="filterRating">Rating</label>
+                    <select id="filterRating">
+                    <option value="">Any Rating</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                    </select>
+                </div>
+            
+                </div>
+            
+                <button id="applyFilters">Apply Filters</button>
+            </div>
+            
+            <div id="historyLogsContainer" class="history-container"></div> <!-- Container to display logs -->
+        </div> <!-- End of History Tab -->
+    
+        <div id="Stats" class="tabcontent">
+            <h1>📊 Stats</h1>
+            <div class="words-box">
+                <words-box id="totalWordsRead">Total Words Read: Loading...</words-box>
+                <div class="confetti"></div>
+            </div>
+            <div class="charts-container">
+                <div class="chart">
+                    <h2>Genres Read</h2>
+                    <canvas id="genrePieChart"></canvas>
+                </div>
+                <div class="chart">
+                    <h2>Forms Read</h2>
+                    <canvas id="formPieChart"></canvas>
+                </div>
+            </div>
+        </div> <!-- End of Stats Tab -->
+
+    </div> <!-- End of popup container -->
+
+    <!-- Scripts -->
+    <script src="../scripts/tabs.js" defer></script>
+    <script src="../scripts/scripts.js" defer></script>
+    <script src="../scripts/filters.js" defer></script>
+    <script src="../scripts/chart.js" defer></script>
+    <script type="module" src="../scripts/popup.js"></script>
+    <script type="module" src="../scripts/logs.js"></script>
+    <script type="module" src="../scripts/graphs.js"></script>
+
+</body> <!-- End of Body -->
+</html> <!-- End of html -->

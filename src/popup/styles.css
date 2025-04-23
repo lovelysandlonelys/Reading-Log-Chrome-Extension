@@ -1,0 +1,349 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #e8f5e9; /* Light green background */
+    margin: 0;
+    padding: 0;
+}
+
+/* Popup Container */
+.popup-container {
+    background-color: #ffffff; /* White container background */
+    padding: 0;
+    border-radius: 12px;
+    width: 360px; /* Slightly smaller width for better fit */
+    height: 580px; /* Reduced height for better balance */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.popup-header {
+    background-color: #4caf50; /* Green header */
+    color: #ffffff; /* White text */
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #388e3c; /* Slightly darker green border */
+}
+
+h1 {
+    text-align: center;
+    color: #4caf50; /* Green */
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+p {
+    color: #3f3f3f; /* Neutral dark gray */
+    font-size: 14px;
+    padding-left: 15px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+}
+
+label {
+    color: #4a4a4a; /* Neutral dark gray */
+    font-weight: bold;
+    font-size: 12px;
+}
+
+input[type="text"],
+select,
+textarea {
+    padding: 5px;
+    border: 1px solid #d1d5db; /* Light gray border */
+    border-radius: 8px;
+    background-color: #ffffff; /* White background */
+    font-size: 12px;
+    box-sizing: border-box;
+    color: #4caf50; /* Green text */
+}
+
+textarea {
+    resize: none;
+    height: 70px;
+}
+
+.rating span {
+    font-size: 20px;
+    cursor: pointer;
+    color: #d1d5db; /* Light gray for unselected stars */
+}
+
+.rating span:hover,
+.rating span.selected {
+    color: #9c27b0; /* Purple for selected stars */
+}
+
+button {
+    background-color: #4caf50; /* Green button */
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #388e3c; /* Slightly darker green on hover */
+}
+
+.tab {
+    display: flex;
+    background-color: #e8f5e9; /* Light green */
+    border-bottom: 1px solid #c8e6c9;
+    width: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    position: sticky; /* Keep the tab buttons visible at the top */
+    top: 0;
+    z-index: 10; /* Ensure the tabs are above other content */
+}
+
+.tablinks {
+    flex: 1;
+    background-color: #ffffff; /* White background */
+    border: none;
+    margin: 0;
+    padding: 6px 0;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10px 10px 0 0;
+    color: #4caf50; /* Green text */
+}
+
+.tablinks:hover {
+    background-color: #c8e6c9; /* Light green on hover */
+}
+
+.tablinks.active {
+    background-color: #9c27b0; /* Purple for active tab */
+    color: white;
+    border-bottom: 1px solid #9c27b0;
+}
+
+.tabcontent {
+    display: none;
+    padding: 10px;
+    flex-grow: 1;
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    height: calc(100% - 50px); /* Adjust height to leave space for tab buttons */
+    box-sizing: border-box; /* Ensure padding is included in height calculation */
+}
+
+.log-entry {
+    background: #ffffff; /* White background */
+    border: 1px solid #d1d5db; /* Light gray border */
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.log-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #4caf50; /* Green */
+}
+
+.log-entry-header a {
+    text-decoration: none;
+    color: #9c27b0; /* Purple for links */
+}
+
+.log-entry-header a:hover {
+    text-decoration: underline;
+    color: #7b1fa2; /* Slightly darker purple on hover */
+}
+
+.log-entry-actions {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.log-entry-actions .delete-btn {
+    background-color: #7b1fa2; /* Pink for delete button */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.log-entry-actions .delete-btn:hover {
+    background-color: #520c70; /* Darker pink on hover */
+}
+
+.words-read {
+    position: relative;
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff; /* White text */
+    background: linear-gradient(135deg, #4caf50, #9c27b0); /* Green to purple gradient */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.filter-container {
+    border: 1px solid #c8e6c9; /* Light green border */
+    background-color: #ffffff; /* White background */
+    padding: 8px;
+    border-radius: 12px;
+    margin: 5px 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filter-container h3 {
+    color: #4caf50; /* Green */
+    font-size: 16px;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.filter-container label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #4a4a4a; /* Neutral dark gray */
+}
+
+.filter-container input[type="text"],
+.filter-container select {
+    padding: 4px;
+    font-size: 12px;
+    border: 1px solid #d1d5db; /* Light gray border */
+    border-radius: 8px;
+    background-color: #ffffff; /* White background */
+    color: #4caf50; /* Green text */
+    transition: border-color 0.3s;
+}
+
+.filter-container input[type="text"]:focus,
+.filter-container select:focus {
+    border-color: #9c27b0; /* Purple focus */
+    outline: none;
+}
+
+#applyFilters {
+    align-self: center;
+    background-color: #4caf50; /* Green button */
+    color: white;
+    padding: 6px 16px;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#applyFilters:hover {
+    background-color: #388e3c; /* Slightly darker green on hover */
+}
+
+/* Stats Tab Styles */
+#Stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px; /* Reduced padding for better fit */
+    gap: 15px; /* Reduced gap for better spacing */
+}
+
+/* Words Box */
+.words-box {
+    position: relative;
+    background: linear-gradient(145deg, #e8f5e9, #c8e6c9); /* Light green gradient */
+    padding: 20px 30px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4); /* Green shadow */
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #000000; /* Dark green text */
+    overflow: hidden;
+}
+
+.confetti {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #a5d6a7 2px, transparent 2px), /* Light green */
+                    radial-gradient(circle, #81c784 2px, transparent 2px), /* Medium green */
+                    radial-gradient(circle, #66bb6a 2px, transparent 2px), /* Darker green */
+                    radial-gradient(circle, #388e3c 2px, transparent 2px); /* Dark green */
+    background-size: 20px 20px;
+    animation: confettiFall 4s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes confettiFall {
+    from {
+        background-position: 0 0, 10px 0, 20px 0, 30px 0;
+    }
+    to {
+        background-position: 0 100px, 10px 100px, 20px 100px, 30px 100px;
+    }
+}
+
+/* Charts Container */
+.charts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Reduced gap for better spacing */
+    width: 100%;
+    padding: 10px; /* Reduced padding for better fit */
+}
+
+.chart {
+    width: 100%;
+    max-width: 340px; /* Slightly smaller max width */
+    text-align: center;
+    padding: 8px; /* Reduced padding inside the chart container */
+    background: #ffffff; /* White background for the chart container */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+}
+
+.chart h2 {
+    font-size: 16px; /* Slightly smaller font size */
+    color: #4caf50; /* Green for headings */
+    margin-bottom: 8px; /* Reduced margin for better spacing */
+}
+
+.chart canvas {
+    width: 100%;
+    max-width: 100%;
+    height: 180px; /* Reduced height for better fit */
+    max-height: 180px;
+    border: 1px solid #d1d5db; /* Light gray border for better separation */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 8px;
+}
