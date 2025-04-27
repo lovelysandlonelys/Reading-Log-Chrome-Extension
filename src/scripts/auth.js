@@ -4,7 +4,7 @@ export async function googleLogin() {
   return new Promise((resolve, reject) => {
     chrome.identity.launchWebAuthFlow(
       {
-        url: `https://accounts.google.com/o/oauth2/auth?client_id=183603389063-386pleldsl0l0ganuctsi6a465112vuq.apps.googleusercontent.com&response_type=token&redirect_uri=https://${chrome.runtime.id}.chromiumapp.org/&scope=https://www.googleapis.com/auth/userinfo.profile`,
+        url: `https://accounts.google.com/o/oauth2/auth?client_id=183603389063-386pleldsl0l0ganuctsi6a465112vuq.apps.googleusercontent.com&response_type=token&redirect_uri=https://${chrome.runtime.id}.chromiumapp.org/&scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email`,
         interactive: true,
       },
       async (redirectUrl) => {
