@@ -1,5 +1,5 @@
 # Reading-Log-Chrome-Extension
-A repository for Savannah Stephenson and Gabe Cavazos's senior capstone project: A chrome extension that serves as a reading log for web pages. 
+A repository for Savannah Stephenson and Gabe Cavazos's senior capstone project: A chrome extension that serves as a reading log for web pages. The extension is currently still under development.
 
 # Privacy Policy for Reading Log Chrome Extension
 Last updated: 04/22/2025
