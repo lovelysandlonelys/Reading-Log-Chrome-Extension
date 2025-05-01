@@ -19,14 +19,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const genre = genreMatch[1]?.toLowerCase() || "";
         const form = formMatch[1]?.toLowerCase() || "";
 
-        const stars = entry.querySelector("p:nth-of-type(3)")?.textContent || "";
+        // Use a more specific selector for stars
+        const stars = entry.querySelector(".log-rating")?.textContent || "";
+        console.log("Stars from DOM:", stars);
+
         const rating = stars.replace(/[^★]/g, "").length.toString();
+        console.log("Rating from DOM:", rating);
 
         const matchTitle = !titleFilter || title.includes(titleFilter);
         const matchAuthor = !authorFilter || author.includes(authorFilter);
         const matchGenre = !genreFilter || genre === genreFilter;
         const matchForm = !formFilter || form === formFilter;
-        const matchRating = !ratingFilter || rating === ratingFilter;
+
+        // Convert ratingFilter and rating to numbers for comparison
+        const ratingFilterValue = parseInt(ratingFilter, 10);
+        console.log("Rating filter value:", ratingFilterValue);
+
+        const matchRating = !ratingFilter || parseInt(rating, 10) === ratingFilterValue;
 
         // Show or hide the entry based on the filters
         entry.style.display = (matchTitle && matchAuthor && matchGenre && matchForm && matchRating) ? "" : "none";
